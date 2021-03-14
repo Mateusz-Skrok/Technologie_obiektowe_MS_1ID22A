@@ -1,0 +1,24 @@
+Imię, nazwisko:
+    Mateusz Skrok mateusz1251@gmail.com 1ID22A
+temat projektu:
+    27. Modelowanie bazy danych
+technologie:
+    Java, Java Swing
+Harmonogram pracy:
+	Marzec:
+		Dodawanie tabel
+	Kwiecień:
+		Dodawanie atrybutów do tabel
+		Określanie własności atrybutów w tabelach
+		Dodawanie relacji (jeden do jeden, jeden do wielu, wielu do wielu)		
+	Maj:
+		Przypisanie klucza obcego do odpowiedniej tabeli w momencie utworzenia relacji
+		Generowanie kodu SQL z utworzonego diagramu, które może być wykorzystany do stworzenia bazy danych
+	Czerwiec:
+		Dodanie dziedziczenia do graficznego interfejsu
+		Generowanie kodu SQL z uwzględnieniem dziedziczenia
+		
+	
+Temat z "Programowanie systemów rozproszonych": Sieciowa gra Memory
+Temat pracy inżynierskiej: Informatyczny system obsługi hurtowni
+Temat pracy magisterskiej: brak
