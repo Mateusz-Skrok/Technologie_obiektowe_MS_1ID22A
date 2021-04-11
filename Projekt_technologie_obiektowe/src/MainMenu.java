@@ -160,6 +160,8 @@ public class MainMenu extends javax.swing.JFrame {
                 panle.setName(jTextField1.getText().trim());
                 jTextField1.setText("");
                 jPanel2.add(panle);
+                jPanel2.revalidate();
+                jPanel2.repaint();
                 cm.registerComponent(panle);
                 jDialog1.setVisible(false);
             }
