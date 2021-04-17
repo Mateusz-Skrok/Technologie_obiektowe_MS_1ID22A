@@ -1,4 +1,8 @@
+import Connector.JConnector;
+
 import javax.swing.*;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class Table extends javax.swing.JPanel {
@@ -12,6 +16,8 @@ public class Table extends javax.swing.JPanel {
     private void initComponents() {
 
         message = new Message();
+        columns=new ArrayList<Column>();
+        relation = new ArrayList<JConnector>();
 
         jDialog1 = new javax.swing.JDialog();
         jLabel3 = new javax.swing.JLabel();
@@ -86,7 +92,11 @@ public class Table extends javax.swing.JPanel {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("jLabel1");
 
-
+        this.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                tableMouseReleased(evt);
+            }
+        });
 
         jButton1.setText("Dodaj");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -150,6 +160,9 @@ public class Table extends javax.swing.JPanel {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {
         frame.getjPanel2().remove(this);
+        frame.getTablice().remove(this);
+        for (JConnector jConnector : relation)
+        frame.getjPanel2().remove(jConnector);
         frame.getjPanel2().revalidate();
         frame.getjPanel2().repaint();
     }
@@ -166,8 +179,9 @@ public class Table extends javax.swing.JPanel {
                 if(jLabel3.getText().equals("Edytuj nazwe tabeli"))
                 this.setName(jTextField1.getText().trim());
                 else if(jLabel3.getText().equals("Nazwa atrybutu")){
-                    Column column = new Column();
+                    Column column = new Column(this);
                     column.setName(jTextField1.getText().trim());
+                    columns.add(column);
                     jPanel1.add(column);
                     jPanel1.revalidate();
                     jPanel1.repaint();
@@ -199,16 +213,34 @@ public class Table extends javax.swing.JPanel {
 
     public void setName(String name){
         jLabel1.setText(name);
-        TableName=name;
+        tableName =name;
+    }
+
+
+    private void tableMouseReleased(java.awt.event.MouseEvent evt) {
+        frame.getjPanel2().revalidate();
+        frame.getjPanel2().repaint();
     }
 
     public javax.swing.JLabel getjLabel1(){
         return this.jLabel1;
     }
+    public javax.swing.JPanel getjPanel1(){
+        return jPanel1;
+    }
+    public String getTableName(){return tableName;}
+    public List<Column> getColumns() {
+        return columns;
+    }
 
+    public List<JConnector> getRelation() {
+        return relation;
+    }
 
+    private List<JConnector> relation;
+    private List<Column> columns;
     private Message message;
-    private String TableName;
+    private String tableName;
     private MainMenu frame;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
