@@ -1,7 +1,10 @@
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 
 public class Column extends javax.swing.JPanel {
@@ -16,10 +19,12 @@ public class Column extends javax.swing.JPanel {
 
     private void initComponents() {
 
+        relation = new ArrayList<>();
         jLabel1 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
         PK= new JCheckBoxMenuItem("PRIMARY KEY");
+        FK= new JCheckBoxMenuItem("FOREIGN KEY");
         NotNull= new JCheckBoxMenuItem("NOT NULL");
         Unique= new JCheckBoxMenuItem("UNIQUE");
         Check= new JCheckBoxMenuItem("CHECK");
@@ -40,10 +45,12 @@ public class Column extends javax.swing.JPanel {
         "BIT(100)","TINYINT(100)","BOOL","BOOLEAN","SMALLINT(100)","MEDIUMINT(100)","INT(100)","INTEGER(100)","BIGINT(100)","FLOAT(1)","DEC(100, 1)","DATE","DATETIME","TIMESTAMP","YEAR"}));
         popup = new JPopupMenu();
         popup.add(PK);
+        popup.add(FK);
         popup.add(NotNull);
         popup.add(Unique);
         popup.add(Check);
         popup.add(Default);
+        FK.setEnabled(false);
 
         popup2 = new JPopupMenu();
         popup2.add(Rename);
@@ -52,9 +59,8 @@ public class Column extends javax.swing.JPanel {
         Check.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                if(Check.getState()) {
-                   TextSetter textSetter= new TextSetter();
+                   TextSetter textSetter= new TextSetter(Check);
                    textSetter.setLabelName("Podaj parametr check");
-                   textSetter.setBoxMenu(Check);
                    textSetter.setVisible(true);
                } else
                    Check.setText("CHECK");
@@ -63,9 +69,8 @@ public class Column extends javax.swing.JPanel {
         Default.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 if(Default.getState()) {
-                    TextSetter textSetter= new TextSetter();
+                    TextSetter textSetter= new TextSetter(Default);
                     textSetter.setLabelName("Podaj parametr Default");
-                    textSetter.setBoxMenu(Default);
                     textSetter.setVisible(true);
                 } else
                     Default.setText("DEFAULT");
@@ -74,9 +79,8 @@ public class Column extends javax.swing.JPanel {
 
         Rename.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    TextSetter textSetter= new TextSetter();
+                    TextSetter textSetter= new TextSetter(Column.this);
                     textSetter.setLabelName("Podaj nowa nazwe");
-                    textSetter.setColumn(Column.this);
                     textSetter.setVisible(true);
 
             }
@@ -129,18 +133,31 @@ public class Column extends javax.swing.JPanel {
 
     public String getName(){return name;}
 
+    public boolean PKState(){
+        return PK.getState();
+    }
+
+    public void FKChangeState(){
+        FK.setState(true);
+    }
+
+    public void addRelation(Table table,Column column){
+        relation.add(new ArrayList<>(Arrays.asList(table,column)));
+    }
+
+    public ArrayList<ArrayList<Object>> getRelation(){
+        return relation;
+    }
+
+    private ArrayList<ArrayList<Object>> relation;
     private Table table;
     private JPopupMenu popup;
     private JPopupMenu popup2;
     private String name;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton6;
     private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JPanel jPanel2;
-    private JCheckBoxMenuItem PK,NotNull,Unique,Check,Default;
+    private JCheckBoxMenuItem PK,NotNull,Unique,Check,Default,FK;
     private JMenuItem Rename,Delete;
 
 }

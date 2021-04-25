@@ -6,8 +6,6 @@ import DragClass.DragLayout;
 import java.awt.*;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.*;
 import java.util.List;
 
@@ -28,16 +26,9 @@ public class MainMenu extends javax.swing.JFrame {
         cm = new ComponentMover();
         cm.setEdgeInsets( new Insets(0, 0, -100, -100) );
         cm.setAutoLayout(true);
-        tablice=new ArrayList<Table>();
-
+        tables =new ArrayList<Table>();
         message =  new Message();
-        keyWords= new HashSet<String>();
 
-        jDialog1 = new javax.swing.JDialog();
-        jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
         jDialog2 = new javax.swing.JDialog();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -58,62 +49,6 @@ public class MainMenu extends javax.swing.JFrame {
         jButton6 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
 
-        readFile("keyWords.txt");
-        jDialog1.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        jDialog1.setLocationRelativeTo(null);
-        jDialog1.setMinimumSize(new java.awt.Dimension(334, 160));
-        jDialog1.setSize(new java.awt.Dimension(334, 160));
-
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Podaj nazwe tabeli");
-
-        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                jTextField1KeyTyped(evt);
-            }
-        });
-
-        jButton3.setText("Utworz");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
-
-        jButton4.setText("Anuluj");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
-        jDialog1.getContentPane().setLayout(jDialog1Layout);
-        jDialog1Layout.setHorizontalGroup(
-                jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jTextField1)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDialog1Layout.createSequentialGroup()
-                                .addGap(58, 58, 58)
-                                .addComponent(jButton4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 92, Short.MAX_VALUE)
-                                .addComponent(jButton3)
-                                .addGap(54, 54, 54))
-        );
-        jDialog1Layout.setVerticalGroup(
-                jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jDialog1Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jLabel1)
-                                .addGap(18, 18, 18)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
-                                .addGroup(jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(jButton3)
-                                        .addComponent(jButton4))
-                                .addGap(20, 20, 20))
-        );
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("jLabel2");
@@ -301,7 +236,10 @@ public class MainMenu extends javax.swing.JFrame {
 
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
-        jDialog1.setVisible(true);
+        Table table = new Table(this);
+        TextSetter textSetter = new TextSetter(table,jPanel2, tables,cm);
+        textSetter.setLabelName("Nazwa tabeli");
+        textSetter.setVisible(true);
 
     }
 
@@ -309,51 +247,15 @@ public class MainMenu extends javax.swing.JFrame {
         jPanel2.removeAll();
         jPanel2.revalidate();
         jPanel2.repaint();
-        tablice.clear();
+        tables.clear();
     }
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {
-        Table panle = new Table(this);
-        if(!jTextField1.getText().isBlank()) {
-            if(!keyWords.contains(jTextField1.getText().toUpperCase())) {
-                panle.setName(jTextField1.getText().trim());
-                jTextField1.setText("");
-                jPanel2.add(panle);
-                jPanel2.revalidate();
-                jPanel2.repaint();
-                tablice.add(panle);
-                cm.registerComponent(panle);
-                jDialog1.setVisible(false);
-
-            }
-            else{
-                message.setVisible(true);
-                message.setText("Uzyto kluczowego slowa");
-            }
-        }
-        else {
-            message.setVisible(true);
-            message.setText("Nie podano nazwy tabeli");
-        }
-    }
-
-    private void jTextField1KeyTyped(java.awt.event.KeyEvent evt) {
-        char c=evt.getKeyChar();
-        if(c==' '||c=='#'||c==';'||c==':'||c=='@')
-            evt.consume();
-
-    }
-
-
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {
-       jDialog1.setVisible(false);
-    }
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {
         loadTableToComboBox();
         if(jComboBox1.getItemCount()!=0)
-        loadAtrributsToComboBox(jComboBox1.getItemAt(jComboBox1.getSelectedIndex()),1);
+        loadAtrributsToComboBox(jComboBox1.getItemAt(jComboBox1.getSelectedIndex()),1,0);
         if(jComboBox2.getItemCount()!=0)
-        loadAtrributsToComboBox(jComboBox2.getItemAt(jComboBox2.getSelectedIndex()),2);
+        loadAtrributsToComboBox(jComboBox2.getItemAt(jComboBox2.getSelectedIndex()),2,0);
         jDialog2.setVisible(true);
         jLabel2.setText("Jeden do wielu");
 
@@ -361,9 +263,9 @@ public class MainMenu extends javax.swing.JFrame {
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {
         loadTableToComboBox();
         if(jComboBox1.getItemCount()!=0)
-            loadAtrributsToComboBox(jComboBox1.getItemAt(jComboBox1.getSelectedIndex()),1);
+            loadAtrributsToComboBox(jComboBox1.getItemAt(jComboBox1.getSelectedIndex()),1,1);
         if(jComboBox2.getItemCount()!=0)
-            loadAtrributsToComboBox(jComboBox2.getItemAt(jComboBox2.getSelectedIndex()),2);
+            loadAtrributsToComboBox(jComboBox2.getItemAt(jComboBox2.getSelectedIndex()),2,1);
         jDialog2.setVisible(true);
         jLabel2.setText("Jeden do jednego");
 
@@ -371,9 +273,9 @@ public class MainMenu extends javax.swing.JFrame {
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {
         loadTableToComboBox();
         if(jComboBox1.getItemCount()!=0)
-            loadAtrributsToComboBox(jComboBox1.getItemAt(jComboBox1.getSelectedIndex()),1);
+            loadAtrributsToComboBox(jComboBox1.getItemAt(jComboBox1.getSelectedIndex()),1,2);
         if(jComboBox2.getItemCount()!=0)
-            loadAtrributsToComboBox(jComboBox2.getItemAt(jComboBox2.getSelectedIndex()),2);
+            loadAtrributsToComboBox(jComboBox2.getItemAt(jComboBox2.getSelectedIndex()),2,2);
         jDialog2.setVisible(true);
         jLabel2.setText("Wielu do wielu");
 
@@ -385,22 +287,47 @@ public class MainMenu extends javax.swing.JFrame {
     }
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {
 
-        Table table1=serchTable(jComboBox1.getItemAt(jComboBox1.getSelectedIndex()));
-        Table table2=serchTable(jComboBox2.getItemAt(jComboBox2.getSelectedIndex()));
+        Table table1= searchTable(jComboBox1.getItemAt(jComboBox1.getSelectedIndex()));
+        Table table2= searchTable(jComboBox2.getItemAt(jComboBox2.getSelectedIndex()));
         JConnector connectLine,connectLine2;
         if(table1!=null&&table2!=null&&table1!=table2) {
-            if(jLabel2.getText().equals("Jeden do wielu"))
-             connectLine = new JConnector(table1, table2, LINE_ARROW_DEST, Color.BLACK);
-            else if(jLabel2.getText().equals("Jeden do jednego"))
+            if(jLabel2.getText().equals("Jeden do wielu")) {
+                connectLine = new JConnector(table2, table1, LINE_ARROW_DEST, Color.BLACK);
+                Column column = searchColumn(jComboBox3.getItemAt(jComboBox3.getSelectedIndex()),table1);
+                Column column2 = searchColumn(jComboBox4.getItemAt(jComboBox4.getSelectedIndex()),table2);
+                column.FKChangeState();
+                column.addRelation(table2,column2);
+            }
+            else if(jLabel2.getText().equals("Jeden do jednego")) {
                 connectLine = new JConnector(table1, table2, LINE_ARROW_NONE, Color.BLACK);
+                Column column = searchColumn(jComboBox3.getItemAt(jComboBox3.getSelectedIndex()),table1);
+                Column column2 = searchColumn(jComboBox4.getItemAt(jComboBox4.getSelectedIndex()),table2);
+                column.FKChangeState();
+                column.addRelation(table2,column2);
+
+            }
             else {
                 Table panle = new Table(this);
-                        panle.setName(jComboBox1.getItemAt(jComboBox1.getSelectedIndex())+"_"+jComboBox2.getItemAt(jComboBox2.getSelectedIndex()));
+                        panle.setName2(jComboBox1.getItemAt(jComboBox1.getSelectedIndex())+"_"+jComboBox2.getItemAt(jComboBox2.getSelectedIndex()));
+                        Column column = new Column(panle);
+                        Column column1 = new Column(panle);
+                        column.setName(jComboBox1.getItemAt(jComboBox1.getSelectedIndex())+"_id");
+                        column1.setName(jComboBox2.getItemAt(jComboBox2.getSelectedIndex())+"_id");
+                        Column columnTable1 = searchColumn(jComboBox3.getItemAt(jComboBox3.getSelectedIndex()),table1);
+                        Column columnTable2 = searchColumn(jComboBox4.getItemAt(jComboBox4.getSelectedIndex()),table2);
+                        column.FKChangeState();
+                        column1.FKChangeState();
+                        panle.getColumns().add(column);
+                        panle.getColumns().add(column1);
+                        panle.getjPanel1().add(column);
+                        panle.getjPanel1().add(column1);
+                        column.addRelation(table1,columnTable1);
+                        column.addRelation(table2,columnTable2);
                         jPanel2.add(panle);
-                        tablice.add(panle);
+                        tables.add(panle);
                         cm.registerComponent(panle);
-                connectLine2 = new JConnector(panle, table1, LINE_ARROW_DEST, Color.BLACK);
-                connectLine = new JConnector(panle, table2, LINE_ARROW_DEST, Color.BLACK);
+                connectLine2 = new JConnector(table1, panle, LINE_ARROW_DEST, Color.BLACK);
+                connectLine = new JConnector(table2, panle, LINE_ARROW_DEST, Color.BLACK);
                 jPanel2.add(connectLine2);
                 panle.getRelation().add(connectLine);
                 panle.getRelation().add(connectLine2);
@@ -417,65 +344,126 @@ public class MainMenu extends javax.swing.JFrame {
     }
 
     private void jComboBox1ItemChange(ItemEvent e){
-        if(jComboBox1.getItemCount()!=0)
-        loadAtrributsToComboBox(jComboBox1.getItemAt(jComboBox1.getSelectedIndex()),1);
+        if(jLabel2.getText().equals("Jeden do wielu")) {
+            if (jComboBox1.getItemCount() != 0)
+                loadAtrributsToComboBox(jComboBox1.getItemAt(jComboBox1.getSelectedIndex()), 1,0);
+        }
+        else if(jLabel2.getText().equals("Jeden do jednego")){
+            if (jComboBox1.getItemCount() != 0)
+                loadAtrributsToComboBox(jComboBox1.getItemAt(jComboBox1.getSelectedIndex()), 1,1);
+        } else {
+            if (jComboBox1.getItemCount() != 0)
+                loadAtrributsToComboBox(jComboBox1.getItemAt(jComboBox1.getSelectedIndex()), 1,2);
+        }
+
     }
     private void jComboBox2ItemChange(ItemEvent e){
-        if(jComboBox2.getItemCount()!=0)
-        loadAtrributsToComboBox(jComboBox2.getItemAt(jComboBox2.getSelectedIndex()),2);
-    }
-    void readFile(String fileName) {
-        try {
-            Scanner textFile = new Scanner(new File(fileName));
-
-            while (textFile.hasNext()) {
-                keyWords.add(textFile.next().trim());
-            }
-
-            textFile.close();
-
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+        if(jLabel2.getText().equals("Jeden do wielu")) {
+            if (jComboBox2.getItemCount() != 0)
+                loadAtrributsToComboBox(jComboBox2.getItemAt(jComboBox2.getSelectedIndex()), 2,0);
+        }
+        else if(jLabel2.getText().equals("Jeden do jednego")){
+            if (jComboBox2.getItemCount() != 0)
+                loadAtrributsToComboBox(jComboBox2.getItemAt(jComboBox2.getSelectedIndex()), 2,1);
+        } else {
+            if (jComboBox2.getItemCount() != 0)
+                loadAtrributsToComboBox(jComboBox2.getItemAt(jComboBox2.getSelectedIndex()), 2,2);
         }
     }
 
     public void loadTableToComboBox(){
         jComboBox1.removeAllItems();
-        for (Table table : tablice) jComboBox1.addItem(table.getTableName());
+        for (Table table : tables) jComboBox1.addItem(table.getTableName());
         jComboBox2.removeAllItems();
-        for (Table table : tablice) jComboBox2.addItem(table.getTableName());
+        for (Table table : tables) jComboBox2.addItem(table.getTableName());
     }
 
-    public Table serchTable(String name){
+    public Table searchTable(String name){
         if(name==null)
             return null;
-        for (Table table : tablice){
+        for (Table table : tables){
             if(name.equals(table.getTableName()))
                return table;
         }
         return null;
     }
-    public void loadAtrributsToComboBox(String name,int i){
-        Table tmp=serchTable(name);
-        if(i==1) {
-            jComboBox3.removeAllItems();
-            for (Column column : tmp.getColumns()) jComboBox3.addItem(column.getName());
-        }else if(i==2) {
-            jComboBox4.removeAllItems();
-            for (Column column : tmp.getColumns()) jComboBox4.addItem(column.getName());
+    public Column searchColumn(String name, Table table){
+        if(name==null)
+            return null;
+        for (Column column : table.getColumns()){
+            if(name.equals(column.getName()))
+                return column;
         }
+        return null;
+    }
+    public void loadAtrributsToComboBox(String name,int i,int realtionType){
+        Table tmp= searchTable(name);
+        if(realtionType==0) {
+            if (i == 1) {
+                jComboBox3.removeAllItems();
+                for (Column column : tmp.getColumns()) {
+                    jComboBox3.addItem(column.getName());
+                }
+            } else if (i == 2) {
+                jComboBox4.removeAllItems();
+                for (Column column : tmp.getColumns()) {
+                    if (column.PKState())
+                        jComboBox4.addItem(column.getName());
+                }
+            }
+        }else if(realtionType==1){
+            if (i == 1) {
+                jComboBox3.removeAllItems();
+                for (Column column : tmp.getColumns()) {
+                    if (column.PKState())
+                        jComboBox3.addItem(column.getName()+" PK");
+                    else
+                        jComboBox3.addItem(column.getName());
+                }
+            } else if (i == 2) {
+                jComboBox4.removeAllItems();
+                for (Column column : tmp.getColumns()) {
+                    if (column.PKState())
+                        jComboBox4.addItem(column.getName()+" PK");
+                    else
+                        jComboBox4.addItem(column.getName());
+                }
+            }
+        } else if(realtionType==2){
+            if (i == 1) {
+                jComboBox3.removeAllItems();
+                for (Column column : tmp.getColumns()) {
+                    if (column.PKState())
+                        jComboBox3.addItem(column.getName());
+                }
+            } else if (i == 2) {
+                jComboBox4.removeAllItems();
+                for (Column column : tmp.getColumns()) {
+                    if (column.PKState())
+                        jComboBox4.addItem(column.getName());
+                }
+            }
+        }
+
     }
 
     public javax.swing.JPanel getjPanel2(){
         return jPanel2;
     }
-    public Set<String> getKeyWords(){ return keyWords;}
-    public List<Table> getTablice(){return tablice;}
+
+    public List<Table> getTables(){return tables;}
 
 
     private void jPanel2MousePressed(java.awt.event.MouseEvent evt) {
-        for (Table table : tablice) System.out.println(table.getTableName());
+        for (Table table : tables){ System.out.println(table.getColumns());
+            for(Column column:table.getColumns()){
+
+                /*if(!column.getRelation().isEmpty()) {
+                    String saa = column.getRelation().toString();
+                    System.out.println(saa.substring(saa.indexOf("Table[")+6,saa.indexOf(",")));
+                }*/
+            }
+        }
     }
 
     public static void main(String args[]) {
@@ -505,7 +493,7 @@ public class MainMenu extends javax.swing.JFrame {
             }
         });
     }
-    ArrayList<Table> tablice;
+    ArrayList<Table> tables;
 
     private Set<String> keyWords;
     private  Message message;

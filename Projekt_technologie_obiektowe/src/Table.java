@@ -19,11 +19,7 @@ public class Table extends javax.swing.JPanel {
         columns=new ArrayList<Column>();
         relation = new ArrayList<JConnector>();
 
-        jDialog1 = new javax.swing.JDialog();
-        jLabel3 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
@@ -31,63 +27,8 @@ public class Table extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         jPanel1 = new javax.swing.JPanel();
 
+
         setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-
-        jDialog1.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        jDialog1.setLocationRelativeTo(null);
-        jDialog1.setMinimumSize(new java.awt.Dimension(334, 160));
-        jDialog1.setSize(new java.awt.Dimension(334, 160));
-
-        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("Edytuj nazwe tabeli");
-
-        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                jTextField1KeyTyped(evt);
-            }
-        });
-
-        jButton4.setText("Edytuj");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
-            }
-        });
-
-        jButton5.setText("Anuluj");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
-        jDialog1.getContentPane().setLayout(jDialog1Layout);
-        jDialog1Layout.setHorizontalGroup(
-                jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jTextField1)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDialog1Layout.createSequentialGroup()
-                                .addGap(58, 58, 58)
-                                .addComponent(jButton5)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 92, Short.MAX_VALUE)
-                                .addComponent(jButton4)
-                                .addGap(54, 54, 54))
-        );
-        jDialog1Layout.setVerticalGroup(
-                jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jDialog1Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jLabel3)
-                                .addGap(18, 18, 18)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
-                                .addGroup(jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(jButton4)
-                                        .addComponent(jButton5))
-                                .addGap(20, 20, 20))
-        );
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("jLabel1");
@@ -153,14 +94,17 @@ public class Table extends javax.swing.JPanel {
     }
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
-            jLabel3.setText("Nazwa atrybutu");
-           jDialog1.setVisible(true);
+        Column column = new Column(this);
+        TextSetter textSetter = new TextSetter(jPanel1,column,columns);
+        textSetter.setLabelName("Podaj nazwe atrybutu");
+        textSetter.setVisible(true);
+
     }
 
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {
         frame.getjPanel2().remove(this);
-        frame.getTablice().remove(this);
+        frame.getTables().remove(this);
         for (JConnector jConnector : relation)
         frame.getjPanel2().remove(jConnector);
         frame.getjPanel2().revalidate();
@@ -168,54 +112,17 @@ public class Table extends javax.swing.JPanel {
     }
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {
-        jLabel3.setText("Edytuj nazwe tabeli");
-        jDialog1.setVisible(true);
+        TextSetter textSetter = new TextSetter(this);
+        textSetter.setLabelName("Zmien nazwe tabeli");
+        textSetter.setVisible(true);
 
     }
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {
-        if(!jTextField1.getText().isBlank()) {
-            if(!frame.getKeyWords().contains(jTextField1.getText().toUpperCase())) {
-                if(jLabel3.getText().equals("Edytuj nazwe tabeli"))
-                this.setName(jTextField1.getText().trim());
-                else if(jLabel3.getText().equals("Nazwa atrybutu")){
-                    Column column = new Column(this);
-                    column.setName(jTextField1.getText().trim());
-                    columns.add(column);
-                    jPanel1.add(column);
-                    jPanel1.revalidate();
-                    jPanel1.repaint();
-                }
-                jTextField1.setText("");
-                jDialog1.setVisible(false);
-            }
-            else{
-                message.setVisible(true);
-                message.setText("Uzyto kluczowego slowa");
-            }
-        }
-        else {
-            message.setVisible(true);
-            message.setText("Nie wprowadzono danych");
-        }
-    }
-
-    private void jTextField1KeyTyped(java.awt.event.KeyEvent evt) {
-        char c=evt.getKeyChar();
-        if(c==' '||c=='#'||c==';'||c==':'||c=='@')
-            evt.consume();
-
-    }
-
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {
-        jDialog1.setVisible(false);
-    }
-
-    public void setName(String name){
+    public void setName2(String name){
         jLabel1.setText(name);
         tableName =name;
+        this.setName(name);
     }
-
 
     private void tableMouseReleased(java.awt.event.MouseEvent evt) {
         frame.getjPanel2().revalidate();
@@ -245,13 +152,8 @@ public class Table extends javax.swing.JPanel {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    public javax.swing.JDialog jDialog1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
 
 }
