@@ -6,6 +6,8 @@ import DragClass.DragLayout;
 import java.awt.*;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.List;
 
@@ -23,6 +25,8 @@ public class MainMenu extends javax.swing.JFrame {
 
 
     private void initComponents() {
+
+        sqlCodeWindow = new SqlCodeWindow();
         cm = new ComponentMover();
         cm.setEdgeInsets( new Insets(0, 0, -100, -100) );
         cm.setAutoLayout(true);
@@ -48,6 +52,7 @@ public class MainMenu extends javax.swing.JFrame {
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
+        jButton10 = new javax.swing.JButton();
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -197,21 +202,32 @@ public class MainMenu extends javax.swing.JFrame {
                 jButton7ActionPerformed(evt);
             }
         });
+        jButton10.setText("SQL ");
+        jButton10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton10ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jButton2)
-                                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                .addComponent(jButton5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(jButton6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(jButton7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 687, Short.MAX_VALUE)
-                                .addContainerGap())
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                        .addComponent(jButton5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                        .addComponent(jButton6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                        .addComponent(jButton7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                        .addComponent(jButton10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                                .addGap(12, 12, 12))
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(jButton2)
+                                                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 658, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -223,14 +239,17 @@ public class MainMenu extends javax.swing.JFrame {
                                 .addComponent(jButton6)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButton7)
-                                .addGap(12, 12, 12)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jButton10)
+                                .addGap(61, 61, 61)
                                 .addComponent(jButton2)
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
-        setLocationRelativeTo(null);
+
+        this.setExtendedState(MAXIMIZED_BOTH);
     }
 
 
@@ -285,6 +304,8 @@ public class MainMenu extends javax.swing.JFrame {
         jDialog2.setVisible(false);
 
     }
+
+
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {
 
         Table table1= searchTable(jComboBox1.getItemAt(jComboBox1.getSelectedIndex()));
@@ -297,6 +318,7 @@ public class MainMenu extends javax.swing.JFrame {
                 Column column2 = searchColumn(jComboBox4.getItemAt(jComboBox4.getSelectedIndex()),table2);
                 column.FKChangeState();
                 column.addRelation(table2,column2);
+                column2.disablePK();
             }
             else if(jLabel2.getText().equals("Jeden do jednego")) {
                 connectLine = new JConnector(table1, table2, LINE_ARROW_NONE, Color.BLACK);
@@ -304,6 +326,7 @@ public class MainMenu extends javax.swing.JFrame {
                 Column column2 = searchColumn(jComboBox4.getItemAt(jComboBox4.getSelectedIndex()),table2);
                 column.FKChangeState();
                 column.addRelation(table2,column2);
+                column2.disablePK();
 
             }
             else {
@@ -322,7 +345,9 @@ public class MainMenu extends javax.swing.JFrame {
                         panle.getjPanel1().add(column);
                         panle.getjPanel1().add(column1);
                         column.addRelation(table1,columnTable1);
-                        column.addRelation(table2,columnTable2);
+                        column1.addRelation(table2,columnTable2);
+                        columnTable1.disablePK();
+                        columnTable2.disablePK();
                         jPanel2.add(panle);
                         tables.add(panle);
                         cm.registerComponent(panle);
@@ -341,6 +366,14 @@ public class MainMenu extends javax.swing.JFrame {
             jDialog2.setVisible(false);
         }
         else System.out.println("Error");
+    }
+
+    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {
+
+        SqlGenerate sqlGenerate = new SqlGenerate(tables);
+        sqlCodeWindow.setTextArea(sqlGenerate.generateSqlTables()+sqlGenerate.generateSqlForeignKey());
+        sqlCodeWindow.setVisible(true);
+
     }
 
     private void jComboBox1ItemChange(ItemEvent e){
@@ -455,18 +488,26 @@ public class MainMenu extends javax.swing.JFrame {
 
 
     private void jPanel2MousePressed(java.awt.event.MouseEvent evt) {
-        for (Table table : tables){ System.out.println(table.getColumns());
+      /*  for (Table table : tables){ //System.out.println(table.getColumns());
             for(Column column:table.getColumns()){
 
-                /*if(!column.getRelation().isEmpty()) {
+                if(!column.getRelation().isEmpty()) {
                     String saa = column.getRelation().toString();
-                    System.out.println(saa.substring(saa.indexOf("Table[")+6,saa.indexOf(",")));
-                }*/
+                    Table table4 = (Table)column.getRelation().get(0).get(0);
+                    Column col = (Column)column.getRelation().get(0).get(1);
+                    System.out.println(table4.getTableName()+"  "+col.getName());
+                   // System.out.println(saa.substring(saa.indexOf("Table[")+6,saa.indexOf(",")));
+                }
             }
-        }
+        }*/
+        SqlGenerate sqlGenerate = new SqlGenerate(tables);
+        System.out.print(sqlGenerate.generateSqlTables()+sqlGenerate.generateSqlForeignKey());
+        //System.out.print(sqlGenerate.generateSqlForeignKey());
+
+
     }
 
-    public static void main(String args[]) {
+    public static void main(String[] args) {
 
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -493,10 +534,12 @@ public class MainMenu extends javax.swing.JFrame {
             }
         });
     }
-    ArrayList<Table> tables;
 
+    private ArrayList<Table> tables;
+
+    private SqlCodeWindow sqlCodeWindow;
     private Set<String> keyWords;
-    private  Message message;
+    private Message message;
     private ComponentMover cm;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
@@ -507,6 +550,7 @@ public class MainMenu extends javax.swing.JFrame {
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
+    private javax.swing.JButton jButton10;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JComboBox<String> jComboBox3;

@@ -148,7 +148,7 @@ public class TextSetter extends javax.swing.JFrame {
         }
         else {
             message.setVisible(true);
-            message.setText("Nie podano nazwy tabeli");
+            message.setText("Brak danych");
             text="";
         }
 

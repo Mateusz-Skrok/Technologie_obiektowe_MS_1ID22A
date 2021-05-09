@@ -41,7 +41,7 @@ public class Column extends javax.swing.JPanel {
 
         jLabel1.setText("jLabel1");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "CHAR(100)", "VARCHAR(100)", "BINARY(100)","TINYBLOB","TINYTEXT","TEXT(100)","BLOB(100)","MEDIUMTEXT","MEDIUMBLOB","LONGTEXT","LONGBLOB",
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] {"int", "CHAR", "VARCHAR", "BINARY","TINYBLOB","TINYTEXT","TEXT","BLOB(100)","MEDIUMTEXT","MEDIUMBLOB","LONGTEXT","LONGBLOB",
         "BIT(100)","TINYINT(100)","BOOL","BOOLEAN","SMALLINT(100)","MEDIUMINT(100)","INT(100)","INTEGER(100)","BIGINT(100)","FLOAT(1)","DEC(100, 1)","DATE","DATETIME","TIMESTAMP","YEAR"}));
         popup = new JPopupMenu();
         popup.add(PK);
@@ -55,6 +55,8 @@ public class Column extends javax.swing.JPanel {
         popup2 = new JPopupMenu();
         popup2.add(Rename);
         popup2.add(Delete);
+
+
 
         Check.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -137,6 +139,10 @@ public class Column extends javax.swing.JPanel {
         return PK.getState();
     }
 
+    public void disablePK(){
+        PK.setEnabled(false);
+    }
+
     public void FKChangeState(){
         FK.setState(true);
     }
@@ -147,6 +153,32 @@ public class Column extends javax.swing.JPanel {
 
     public ArrayList<ArrayList<Object>> getRelation(){
         return relation;
+    }
+
+    public boolean[] attributState(){
+
+        boolean[] attributs = new boolean[5];
+        attributs[0]=PK.getState();
+        attributs[1]=NotNull.getState();
+        attributs[2]=Unique.getState();
+        attributs[3]=Check.getState();
+        attributs[4]=Default.getState();
+
+        return attributs;
+    }
+
+    public String getCheckArgument(){
+
+        return Check.getText().substring(Check.getText().indexOf("("),Check.getText().indexOf(")"));
+    }
+
+    public String getDefaultArgument(){
+
+        return Default.getText().substring(Default.getText().indexOf("("),Default.getText().indexOf(")"));
+    }
+
+    public String getColumType(){
+        return jComboBox1.getItemAt(jComboBox1.getSelectedIndex());
     }
 
     private ArrayList<ArrayList<Object>> relation;
