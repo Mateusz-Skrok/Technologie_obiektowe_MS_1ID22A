@@ -17,6 +17,7 @@ public class ConnectLine {
     public static final int LINE_ARROW_SOURCE = 1;
     public static final int LINE_ARROW_DEST = 2;
     public static final int LINE_ARROW_BOTH = 3;
+    public static final int LINE_INHERITANCE = 4;
 
     public static int LINE_ARROW_WIDTH = 10;
 
@@ -71,6 +72,9 @@ public class ConnectLine {
                 paintArrow(g2d, p1, p2);
                 paintArrow(g2d, p2, p1);
                 break;
+            case LINE_INHERITANCE:
+                paintInheritanceArrow(g2d, p1, p2);
+                break;
         }
     }
 
@@ -78,7 +82,7 @@ public class ConnectLine {
         paintArrow(g2d, p1, p2, getRestrictedArrowWidth(p1, p2));
     }
 
-    protected void paintArrow(Graphics2D g2d, Point p1, Point p2, int width) {
+   protected void paintArrow(Graphics2D g2d, Point p1, Point p2, int width) {
         Point2D.Float pp1 = new Point2D.Float(p1.x, p1.y);
         Point2D.Float pp2 = new Point2D.Float(p2.x, p2.y);
         Point2D.Float left = getLeftArrowPoint(pp1, pp2, width);
@@ -87,6 +91,17 @@ public class ConnectLine {
         g2d.drawLine(p2.x, p2.y, Math.round(left.x), Math.round(left.y));
         g2d.drawLine(p2.x, p2.y, Math.round(right.x), Math.round(right.y));
     }
+
+  protected void paintInheritanceArrow(Graphics2D g2d, Point p1, Point p2) {
+      Point2D.Float pp1 = new Point2D.Float(p1.x, p1.y);
+      Point2D.Float pp2 = new Point2D.Float(p2.x, p2.y);
+      Point2D.Float left = getLeftArrowPoint(pp1, pp2, 30);
+      Point2D.Float right = getRightArrowPoint(pp1, pp2, 30);
+
+      g2d.drawLine(p2.x, p2.y, Math.round(left.x), Math.round(left.y));
+      g2d.drawLine(p2.x, p2.y, Math.round(right.x), Math.round(right.y));
+      g2d.drawLine(Math.round(left.x), Math.round(left.y), Math.round(right.x), Math.round(right.y));
+  }
 
     protected void paint1Break(Graphics2D g2d) {
         if (lineStart == LINE_START_HORIZONTAL) {
@@ -103,6 +118,9 @@ public class ConnectLine {
                     paintArrow(g2d, new Point(p2.x, p1.y), p2);
                     paintArrow(g2d, new Point(p2.x, p1.y), p1);
                     break;
+                case LINE_INHERITANCE:
+                    paintInheritanceArrow(g2d, new Point(p2.x, p1.y), p2);
+                    break;
             }
         }
         else if (lineStart == LINE_START_VERTICAL) {
@@ -118,6 +136,9 @@ public class ConnectLine {
                 case LINE_ARROW_BOTH:
                     paintArrow(g2d, new Point(p1.x, p2.y), p2);
                     paintArrow(g2d, new Point(p1.x, p2.y), p1);
+                    break;
+                case LINE_INHERITANCE:
+                    paintInheritanceArrow(g2d, new Point(p1.x, p2.y), p2);
                     break;
             }
         }
@@ -139,6 +160,9 @@ public class ConnectLine {
                     paintArrow(g2d, new Point(p1.x + (p2.x - p1.x) / 2, p2.y), p2);
                     paintArrow(g2d, new Point(p1.x + (p2.x - p1.x) / 2, p1.y), p1);
                     break;
+                case LINE_INHERITANCE:
+                    paintInheritanceArrow(g2d, new Point(p1.x + (p2.x - p1.x) / 2, p2.y), p2);
+                    break;
             }
         }
         else if (lineStart == LINE_START_VERTICAL) {
@@ -156,6 +180,9 @@ public class ConnectLine {
                 case LINE_ARROW_BOTH:
                     paintArrow(g2d, new Point(p2.x, p1.y + (p2.y - p1.y) / 2), p2);
                     paintArrow(g2d, new Point(p1.x, p1.y + (p2.y - p1.y) / 2), p1);
+                    break;
+                case LINE_INHERITANCE:
+                    paintInheritanceArrow(g2d,new Point(p2.x, p1.y + (p2.y - p1.y) / 2), p2);
                     break;
             }
         }

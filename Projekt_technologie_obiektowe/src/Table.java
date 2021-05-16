@@ -18,7 +18,8 @@ public class Table extends javax.swing.JPanel {
         message = new Message();
         columns=new ArrayList<Column>();
         relation = new ArrayList<JConnector>();
-
+        subTables = new ArrayList<Table>();
+        superTables = new ArrayList<Table>();
 
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
@@ -107,6 +108,10 @@ public class Table extends javax.swing.JPanel {
         frame.getTables().remove(this);
         for (JConnector jConnector : relation)
         frame.getjPanel2().remove(jConnector);
+        for(Table table:superTables)
+            table.getSubTables().remove(this);
+        for(Table table:subTables)
+            table.getSuperTables().remove(this);
         frame.getjPanel2().revalidate();
         frame.getjPanel2().repaint();
     }
@@ -139,13 +144,20 @@ public class Table extends javax.swing.JPanel {
     public List<Column> getColumns() {
         return columns;
     }
-
     public List<JConnector> getRelation() {
         return relation;
+    }
+    public List<Table> getSubTables() {
+        return subTables;
+    }
+    public List<Table> getSuperTables() {
+        return superTables;
     }
 
     private List<JConnector> relation;
     private List<Column> columns;
+    private List<Table> subTables;
+    private List<Table> superTables;
     private Message message;
     private String tableName;
     private MainMenu frame;

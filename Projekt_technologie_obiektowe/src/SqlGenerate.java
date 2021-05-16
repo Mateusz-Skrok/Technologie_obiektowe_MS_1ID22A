@@ -11,6 +11,12 @@ public class SqlGenerate {
         String sql="";
         for(Table table :tables){
             sql= sql+"CREATE TABLE " +table.getTableName()+" (\n";
+            if(table.getSuperTables()!=null)
+                for(Table table1: table.getSuperTables())
+                    for(Column column1:table1.getColumns()){
+                        if(column1.PKState())
+                            sql=sql+column1.getName()+" "+column1.getColumType()+" "+getConstrains(column1)+"\n";
+                    }
             for(Column column:table.getColumns()){
                 sql=sql+column.getName()+" "+column.getColumType()+" "+getConstrains(column)+"\n";
             }
@@ -19,8 +25,6 @@ public class SqlGenerate {
         }
         return sql;
     }
-
-
 
         private String getRandomString(int n)
         {
@@ -50,6 +54,17 @@ public class SqlGenerate {
                 }
             }
         }
+        sql=sql+"\n";
+
+        for(Table table :tables) {
+            for (Table table1 : table.getSubTables()) {
+                for(Column column:table.getColumns()) {
+                    if(column.PKState())
+                    sql = sql + "ALTER TABLE " + table1.getTableName() + " ADD CONSTRAINT " + getRandomString(10) + " FOREIGN KEY (" + column.getName() + ") " + "REFERENCES " + table.getTableName() + "(" + column.getName() + ");\n";
+                }
+            }
+        }
+
         return sql;
 
     }
