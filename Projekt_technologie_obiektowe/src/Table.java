@@ -1,6 +1,7 @@
 import Connector.JConnector;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,20 +18,35 @@ public class Table extends javax.swing.JPanel {
 
         message = new Message();
         columns=new ArrayList<Column>();
-        relation = new ArrayList<JConnector>();
+        jConnectors = new ArrayList<JConnector>();
         subTables = new ArrayList<Table>();
         superTables = new ArrayList<Table>();
 
         jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jPanel1 = new javax.swing.JPanel();
+        rightClickMenu=new JPopupMenu();
+        rename=new JMenuItem("Zmien nazwe");
+        delete=new JMenuItem("Usun");
+        add=new JMenuItem("Dodaj atrybut");
+        removeRelation = new JMenu("Usun relacje");
+        rightClickMenu.add(rename);
+        rightClickMenu.add(delete);
+        rightClickMenu.add(add);
 
+        rightClickMenu.add(removeRelation);
 
         setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-
+        jPanel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                formMouseClicked(evt);
+            }
+        });
+        addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                formMouseClicked(evt);
+            }
+        });
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("jLabel1");
 
@@ -40,22 +56,22 @@ public class Table extends javax.swing.JPanel {
             }
         });
 
-        jButton1.setText("Dodaj");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+
+        add.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Usun");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+
+        delete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
             }
         });
 
-        jButton3.setText("jButton3");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+
+        rename.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
             }
@@ -63,35 +79,32 @@ public class Table extends javax.swing.JPanel {
         jPanel1.setLayout(new javax.swing.BoxLayout(jPanel1, BoxLayout.Y_AXIS));
         jScrollPane1.setViewportView(jPanel1);
 
+        setBackground(java.awt.Color.orange);
+        jPanel1.setBackground(java.awt.Color.yellow);
+        jPanel1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jButton2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton1))
-                        .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 3, Short.MAX_VALUE))
-                        .addComponent(jScrollPane1)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
                                 .addContainerGap()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(jLabel1)
-                                        .addComponent(jButton3))
+                                .addComponent(jLabel1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(jButton1)
-                                        .addComponent(jButton2)))
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE)
+                                .addContainerGap())
         );
+
+
+    }
+
+    private void formMouseClicked(java.awt.event.MouseEvent evt) {
+        if(SwingUtilities.isRightMouseButton(evt))
+            rightClickMenu.show(evt.getComponent(), evt.getX(), evt.getY());
     }
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
@@ -106,8 +119,15 @@ public class Table extends javax.swing.JPanel {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {
         frame.getjPanel2().remove(this);
         frame.getTables().remove(this);
-        for (JConnector jConnector : relation)
-        frame.getjPanel2().remove(jConnector);
+        for (JConnector jConnector : jConnectors) {
+            Table tableSource=(Table) jConnector.getSource();
+            for(Column column:tableSource.getColumns())
+                column.enablePK();
+            Table tableDestination=(Table) jConnector.getDest();
+            for(Column column:tableDestination.getColumns())
+                column.enablePK();
+            frame.getjPanel2().remove(jConnector);
+        }
         for(Table table:superTables)
             table.getSubTables().remove(this);
         for(Table table:subTables)
@@ -123,15 +143,101 @@ public class Table extends javax.swing.JPanel {
 
     }
 
-    public void setName2(String name){
+    public void setRelationDeleteMenuList(){
+        removeRelation.removeAll();
+        for (JConnector jConnector : jConnectors) {
+            Table tableSource=(Table) jConnector.getSource();
+            if(tableSource!=this) {
+                JMenuItem newDeleteRelationMenu = new JMenuItem(tableSource.getTableName());
+                newDeleteRelationMenu.addActionListener(new java.awt.event.ActionListener() {
+                    public void actionPerformed(java.awt.event.ActionEvent evt) {
+                        removeRelation(evt,newDeleteRelationMenu);
+                    }
+                });
+                removeRelation.add(newDeleteRelationMenu);
+            }
+            Table tableDestination=(Table) jConnector.getDest();
+            if(tableDestination!=this) {
+                JMenuItem newDeleteRelationMenu = new JMenuItem(tableDestination.getTableName());
+                newDeleteRelationMenu.addActionListener(new java.awt.event.ActionListener() {
+                    public void actionPerformed(java.awt.event.ActionEvent evt) {
+                        removeRelation(evt,newDeleteRelationMenu);
+                    }
+                });
+                removeRelation.add(newDeleteRelationMenu);
+            }
+        }
+    }
+
+    private void removeRelation(java.awt.event.ActionEvent evt,JMenuItem menuItem){
+      try {
+          for (JConnector jConnector : jConnectors) {
+              Table tableDestination = (Table) jConnector.getDest();
+              Table tableSource = (Table) jConnector.getSource();
+              if (tableDestination.getTableName().equals(menuItem.getText()) || tableSource.getTableName().equals(menuItem.getText())) {
+                  frame.getjPanel2().remove(jConnector);
+                  tableDestination.getjConnectors().remove(jConnector);
+                  tableSource.getjConnectors().remove(jConnector);
+                  if(tableDestination.equals(this)) {
+                      for (Column column : tableDestination.getColumns()) {
+                          for (int i = 0; i < column.getRelation().size(); i++) {
+                              Table relationTabelInList=(Table) column.getRelation().get(i).get(0);
+                              if(relationTabelInList.getTableName().equals(menuItem.getText()))
+                                    column.getRelation().remove(i);
+                          }
+                          if (column.getFKState())
+                              column.FKChangeStateToFalse();
+                      }
+                  }
+                  if(tableSource.equals(this)){
+                      for (Column column : tableDestination.getColumns()) {
+                          for (int i = 0; i < column.getRelation().size(); i++) {
+                              Table relationTabelInList=(Table) column.getRelation().get(i).get(0);
+                              if(relationTabelInList.getTableName().equals(tableSource.getTableName()))
+                                  column.getRelation().remove(i);
+                          }
+                          if (column.getFKState())
+                              column.FKChangeStateToFalse();
+                      }
+                  }
+                  tableDestination.setRelationDeleteMenuList();
+                  tableSource.setRelationDeleteMenuList();
+                  if (jConnectors.isEmpty()) {
+                      for (Column column : tableSource.getColumns())
+                          column.enablePK();
+                  }
+              }
+          }
+          frame.getjPanel2().revalidate();
+          frame.getjPanel2().repaint();
+
+      }catch (Exception e){
+          System.out.println(e);
+      }
+    }
+    public void setTableName(String name){
         jLabel1.setText(name);
         tableName =name;
         this.setName(name);
     }
 
     private void tableMouseReleased(java.awt.event.MouseEvent evt) {
+        if(!columns.isEmpty())
+        setPreferredSize(new Dimension(columns.get(0).getWidth()+15,this.getHeight()));
         frame.getjPanel2().revalidate();
         frame.getjPanel2().repaint();
+
+    }
+
+
+
+    public boolean PKAvailable(){
+        for(Column column:columns) {
+            if (column.getPKState()) {
+                return true;
+            }
+        }
+            return false;
     }
 
     public javax.swing.JLabel getjLabel1(){
@@ -144,8 +250,8 @@ public class Table extends javax.swing.JPanel {
     public List<Column> getColumns() {
         return columns;
     }
-    public List<JConnector> getRelation() {
-        return relation;
+    public List<JConnector> getjConnectors() {
+        return jConnectors;
     }
     public List<Table> getSubTables() {
         return subTables;
@@ -154,18 +260,17 @@ public class Table extends javax.swing.JPanel {
         return superTables;
     }
 
-    private List<JConnector> relation;
+    private List<JConnector> jConnectors;
     private List<Column> columns;
     private List<Table> subTables;
     private List<Table> superTables;
     private Message message;
     private String tableName;
-    private MainMenu frame;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private final MainMenu frame;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-
+    private JPopupMenu rightClickMenu;
+    private JMenuItem rename,delete,add;
+    private JMenu removeRelation;
 }

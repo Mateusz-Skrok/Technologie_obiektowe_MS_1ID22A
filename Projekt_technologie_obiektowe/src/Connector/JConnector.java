@@ -40,11 +40,9 @@ public class JConnector extends JPanel  {
         Graphics2D g2d = (Graphics2D) g;
         calculateLine();
         if (line != null) {
-            //Shape oldClip = g2d.getClip();
            g2d.setClip(null);
             g2d.setColor(lineColor);
             line.paint(g2d);
-            //g2d.setClip(oldClip);
         }
     }
 
@@ -82,9 +80,7 @@ public class JConnector extends JPanel  {
         }
         else if (yIntersect) {
             int y1 = rSource.y + rSource.height / 2;
-            ;
             int y2 = rDest.y + rDest.height / 2;
-            ;
             int x1;
             int x2;
             if (rSource.x + rSource.width <= rDest.x) {
@@ -106,7 +102,6 @@ public class JConnector extends JPanel  {
             int x1;
             int x2;
             if (rSource.y + rSource.height <= rDest.y) {
-                //source higher
                 y1 = rSource.y + rSource.height / 2;
                 y2 = rDest.y;
                 if (rSource.x + rSource.width <= rDest.x) {
@@ -169,4 +164,7 @@ public class JConnector extends JPanel  {
     public void setLineArrow(int arrow) {
         lineArrow = arrow;
     }
+
+    public JComponent getSource(){return source;}
+    public JComponent getDest(){return dest;}
 }

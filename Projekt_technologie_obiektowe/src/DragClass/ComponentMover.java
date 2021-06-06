@@ -127,6 +127,7 @@ public class ComponentMover extends MouseAdapter
     @Override
     public void mousePressed(MouseEvent e)
     {
+
         source = e.getComponent();
         int width  = source.getSize().width  - dragInsets.left - dragInsets.right;
         int height = source.getSize().height - dragInsets.top - dragInsets.bottom;
@@ -253,7 +254,7 @@ public class ComponentMover extends MouseAdapter
         {
             if (destination instanceof JComponent)
             {
-                ((JComponent)destination).revalidate();
+                destination.revalidate();
             }
             else
             {

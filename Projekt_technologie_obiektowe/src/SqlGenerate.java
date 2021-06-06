@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Locale;
 
 public class SqlGenerate {
 
@@ -14,9 +13,11 @@ public class SqlGenerate {
             if(table.getSuperTables()!=null)
                 for(Table table1: table.getSuperTables())
                     for(Column column1:table1.getColumns()){
-                        if(column1.PKState())
-                            sql=sql+column1.getName()+" "+column1.getColumType()+" "+getConstrains(column1)+"\n";
-                    }
+                        if(column1.getPKState()) {
+                            sql = sql + column1.getName() + " " + column1.getColumType() + " " + getConstrains(column1) + "\n";
+                            break;
+                        }
+                        }
             for(Column column:table.getColumns()){
                 sql=sql+column.getName()+" "+column.getColumType()+" "+getConstrains(column)+"\n";
             }
@@ -59,9 +60,11 @@ public class SqlGenerate {
         for(Table table :tables) {
             for (Table table1 : table.getSubTables()) {
                 for(Column column:table.getColumns()) {
-                    if(column.PKState())
-                    sql = sql + "ALTER TABLE " + table1.getTableName() + " ADD CONSTRAINT " + getRandomString(10) + " FOREIGN KEY (" + column.getName() + ") " + "REFERENCES " + table.getTableName() + "(" + column.getName() + ");\n";
-                }
+                    if(column.getPKState()) {
+                        sql = sql + "ALTER TABLE " + table1.getTableName() + " ADD CONSTRAINT " + getRandomString(10) + " FOREIGN KEY (" + column.getName() + ") " + "REFERENCES " + table.getTableName() + "(" + column.getName() + ");\n";
+                        break;
+                    }
+                    }
             }
         }
 
@@ -89,5 +92,5 @@ public class SqlGenerate {
         return constrainsString;
     }
 
-    private ArrayList<Table> tables;
+    private final ArrayList<Table> tables;
 }

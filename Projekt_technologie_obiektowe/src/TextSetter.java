@@ -125,14 +125,14 @@ public class TextSetter extends javax.swing.JFrame {
                     column.setName(text);
                 }
                 if(table!=null)
-                    table.setName2(text);
+                    table.setTableName(text);
                 if(column!=null&&columnList!=null&&jPanel!=null){
                     column.setName(text);
                     columnList.add(column);
                     jPanel.add(column);
                 }
                 if(table!=null&&tableList!=null&&jPanel!=null&&cm!=null){
-                    table.setName2(text);
+                    table.setTableName(text);
                     tableList.add(table);
                     jPanel.add(table);
                     jPanel.revalidate();
@@ -193,7 +193,7 @@ public class TextSetter extends javax.swing.JFrame {
     private JCheckBoxMenuItem BoxMenu;
     private Set<String> keyWords;
     private String text;
-    private Message message = new Message();
+    private final Message message = new Message();
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;

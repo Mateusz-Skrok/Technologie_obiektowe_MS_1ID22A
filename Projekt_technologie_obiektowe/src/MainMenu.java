@@ -6,8 +6,6 @@ import DragClass.DragLayout;
 import java.awt.*;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.List;
 
@@ -240,7 +238,7 @@ public class MainMenu extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jButton1.setText("Dodaj");
+        jButton1.setText("Dodaj tabele");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -292,7 +290,8 @@ public class MainMenu extends javax.swing.JFrame {
                 jButton11ActionPerformed(evt);
             }
         });
-
+        jPanel2.setBackground(new java.awt.Color(255, 255, 204));
+        setBackground(Color.yellow);
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -399,7 +398,9 @@ public class MainMenu extends javax.swing.JFrame {
                 connectLine = new JConnector(table2, table1, LINE_ARROW_DEST, Color.BLACK);
                 Column column = searchColumn(jComboBox3.getItemAt(jComboBox3.getSelectedIndex()),table1);
                 Column column2 = searchColumn(jComboBox4.getItemAt(jComboBox4.getSelectedIndex()),table2);
-                column.FKChangeState();
+                if(!column2.getPKState())
+                    column2.setPKState();
+                column.FKChangeStateToTrue();
                 column.addRelation(table2,column2);
                 column2.disablePK();
             }
@@ -407,22 +408,22 @@ public class MainMenu extends javax.swing.JFrame {
                 connectLine = new JConnector(table1, table2, LINE_ARROW_NONE, Color.BLACK);
                 Column column = searchColumn(jComboBox3.getItemAt(jComboBox3.getSelectedIndex()),table1);
                 Column column2 = searchColumn(jComboBox4.getItemAt(jComboBox4.getSelectedIndex()),table2);
-                column.FKChangeState();
+                column.FKChangeStateToTrue();
                 column.addRelation(table2,column2);
                 column2.disablePK();
 
             }
             else {
                 Table panle = new Table(this);
-                        panle.setName2(jComboBox1.getItemAt(jComboBox1.getSelectedIndex())+"_"+jComboBox2.getItemAt(jComboBox2.getSelectedIndex()));
+                        panle.setTableName(jComboBox1.getItemAt(jComboBox1.getSelectedIndex())+"_"+jComboBox2.getItemAt(jComboBox2.getSelectedIndex()));
                         Column column = new Column(panle);
                         Column column1 = new Column(panle);
                         column.setName(jComboBox1.getItemAt(jComboBox1.getSelectedIndex())+"_id");
                         column1.setName(jComboBox2.getItemAt(jComboBox2.getSelectedIndex())+"_id");
                         Column columnTable1 = searchColumn(jComboBox3.getItemAt(jComboBox3.getSelectedIndex()),table1);
                         Column columnTable2 = searchColumn(jComboBox4.getItemAt(jComboBox4.getSelectedIndex()),table2);
-                        column.FKChangeState();
-                        column1.FKChangeState();
+                        column.FKChangeStateToTrue();
+                        column1.FKChangeStateToTrue();
                         panle.getColumns().add(column);
                         panle.getColumns().add(column1);
                         panle.getjPanel1().add(column);
@@ -437,12 +438,15 @@ public class MainMenu extends javax.swing.JFrame {
                 connectLine2 = new JConnector(table1, panle, LINE_ARROW_DEST, Color.BLACK);
                 connectLine = new JConnector(table2, panle, LINE_ARROW_DEST, Color.BLACK);
                 jPanel2.add(connectLine2);
-                panle.getRelation().add(connectLine);
-                panle.getRelation().add(connectLine2);
+                panle.getjConnectors().add(connectLine);
+                panle.getjConnectors().add(connectLine2);
+                panle.setRelationDeleteMenuList();
 
             }
-            table1.getRelation().add(connectLine);
-            table2.getRelation().add(connectLine);
+            table1.getjConnectors().add(connectLine);
+            table2.getjConnectors().add(connectLine);
+            table1.setRelationDeleteMenuList();
+            table2.setRelationDeleteMenuList();
             jPanel2.add(connectLine);
             jPanel2.revalidate();
             jPanel2.repaint();
@@ -473,16 +477,25 @@ public class MainMenu extends javax.swing.JFrame {
             Table table1 = searchTable(jComboBox5.getItemAt(jComboBox5.getSelectedIndex()));
             Table table2 = searchTable(jComboBox6.getItemAt(jComboBox6.getSelectedIndex()));
             JConnector connectLine;
-            if(table1!=null&&table2!=null&&table1!=table2) {
-                connectLine = new JConnector(table2, table1, LINE_INHERITANCE, Color.BLACK);
-                table1.getRelation().add(connectLine);
-                table2.getRelation().add(connectLine);
-                table1.getSubTables().add(table2);
-                table2.getSuperTables().add(table1);
-                jPanel2.add(connectLine);
-                jPanel2.revalidate();
-                jPanel2.repaint();
-                jDialog3.setVisible(false);
+            if(table1!=null && table2!=null && table1!=table2) {
+                if(table1.PKAvailable()) {
+                    connectLine = new JConnector(table2, table1, LINE_INHERITANCE, Color.BLACK);
+                    table1.getjConnectors().add(connectLine);
+                    table2.getjConnectors().add(connectLine);
+                    table1.getSubTables().add(table2);
+                    table2.getSuperTables().add(table1);
+                    jPanel2.add(connectLine);
+                    jPanel2.revalidate();
+                    jPanel2.repaint();
+                    jDialog3.setVisible(false);
+                }else{
+                    message.setText("Brak klucz głównego w tabeli bazowej");
+                    message.setVisible(true);
+                }
+            }
+            else{
+                message.setText("Wybrano takie same tabele");
+                message.setVisible(true);
             }
         }
 
@@ -554,7 +567,7 @@ public class MainMenu extends javax.swing.JFrame {
             } else if (i == 2) {
                 jComboBox4.removeAllItems();
                 for (Column column : tmp.getColumns()) {
-                    if (column.PKState())
+                    if (column.getPKState())
                         jComboBox4.addItem(column.getName());
                 }
             }
@@ -562,16 +575,16 @@ public class MainMenu extends javax.swing.JFrame {
             if (i == 1) {
                 jComboBox3.removeAllItems();
                 for (Column column : tmp.getColumns()) {
-                    if (column.PKState())
-                        jComboBox3.addItem(column.getName()+" PK");
+                    if (column.getPKState())
+                        jComboBox3.addItem(column.getName());
                     else
                         jComboBox3.addItem(column.getName());
                 }
             } else if (i == 2) {
                 jComboBox4.removeAllItems();
                 for (Column column : tmp.getColumns()) {
-                    if (column.PKState())
-                        jComboBox4.addItem(column.getName()+" PK");
+                    if (column.getPKState())
+                        jComboBox4.addItem(column.getName());
                     else
                         jComboBox4.addItem(column.getName());
                 }
@@ -580,13 +593,13 @@ public class MainMenu extends javax.swing.JFrame {
             if (i == 1) {
                 jComboBox3.removeAllItems();
                 for (Column column : tmp.getColumns()) {
-                    if (column.PKState())
+                    if (column.getPKState())
                         jComboBox3.addItem(column.getName());
                 }
             } else if (i == 2) {
                 jComboBox4.removeAllItems();
                 for (Column column : tmp.getColumns()) {
-                    if (column.PKState())
+                    if (column.getPKState())
                         jComboBox4.addItem(column.getName());
                 }
             }
@@ -617,7 +630,6 @@ public class MainMenu extends javax.swing.JFrame {
        // SqlGenerate sqlGenerate = new SqlGenerate(tables);
        // System.out.print(sqlGenerate.generateSqlTables()+sqlGenerate.generateSqlForeignKey());
         //System.out.print(sqlGenerate.generateSqlForeignKey());
-        for (Table table : tables) System.out.println(table.getSubTables());
 
     }
 

@@ -41,8 +41,9 @@ public class Column extends javax.swing.JPanel {
 
         jLabel1.setText("jLabel1");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] {"int", "CHAR", "VARCHAR", "BINARY","TINYBLOB","TINYTEXT","TEXT","BLOB(100)","MEDIUMTEXT","MEDIUMBLOB","LONGTEXT","LONGBLOB",
-        "BIT(100)","TINYINT(100)","BOOL","BOOLEAN","SMALLINT(100)","MEDIUMINT(100)","INT(100)","INTEGER(100)","BIGINT(100)","FLOAT(1)","DEC(100, 1)","DATE","DATETIME","TIMESTAMP","YEAR"}));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] {"NUMBER","CHAR", "NCHAR", "VARCHAR2","VARCHAR","NVARCHAR2","CLOB","NCLOB","LONG","DATE","BLOB",
+        "BFILE","RAW"}));
+        jComboBox1.setMaximumSize( jComboBox1.getPreferredSize() );
         popup = new JPopupMenu();
         popup.add(PK);
         popup.add(FK);
@@ -90,10 +91,12 @@ public class Column extends javax.swing.JPanel {
 
         Delete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                table.getjPanel1().remove(Column.this);
-                table.getjPanel1().revalidate();
-                table.getjPanel1().repaint();
-                table.getColumns().remove(Column.this);
+                if(PK.isEnabled()&&!FK.getState()) {
+                    table.getjPanel1().remove(Column.this);
+                    table.getjPanel1().revalidate();
+                    table.getjPanel1().repaint();
+                    table.getColumns().remove(Column.this);
+                }
             }
         });
 
@@ -103,6 +106,7 @@ public class Column extends javax.swing.JPanel {
                 popup.show(e.getComponent(), e.getX(), e.getY());
             }
         });
+        setBackground(Color.yellow);
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -135,16 +139,27 @@ public class Column extends javax.swing.JPanel {
 
     public String getName(){return name;}
 
-    public boolean PKState(){
+    public boolean getPKState(){
         return PK.getState();
+    }
+    public void setPKState(){
+        PK.setState(true);
     }
 
     public void disablePK(){
         PK.setEnabled(false);
     }
+    public void enablePK(){
+        if(!PK.isEnabled())
+            PK.setEnabled(true);
+    }
 
-    public void FKChangeState(){
+    public void FKChangeStateToTrue(){
         FK.setState(true);
+    }
+
+    public void FKChangeStateToFalse(){
+        FK.setState(false);
     }
 
     public void addRelation(Table table,Column column){
@@ -181,8 +196,12 @@ public class Column extends javax.swing.JPanel {
         return jComboBox1.getItemAt(jComboBox1.getSelectedIndex());
     }
 
+    public boolean getFKState(){
+        return FK.getState();
+    }
+
     private ArrayList<ArrayList<Object>> relation;
-    private Table table;
+    private final Table table;
     private JPopupMenu popup;
     private JPopupMenu popup2;
     private String name;

@@ -1,6 +1,7 @@
 package Connector;
 
 import java.awt.*;
+import java.awt.geom.Ellipse2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Point2D.*;
 import java.awt.geom.Point2D.*;
@@ -64,6 +65,7 @@ public class ConnectLine {
         switch (lineArrow) {
             case LINE_ARROW_DEST:
                 paintArrow(g2d, p1, p2);
+                paintRelationOne(g2d,p2,p1);
                 break;
             case LINE_ARROW_SOURCE:
                 paintArrow(g2d, p2, p1);
@@ -83,6 +85,53 @@ public class ConnectLine {
     }
 
    protected void paintArrow(Graphics2D g2d, Point p1, Point p2, int width) {
+        int  x1=p2.x,x2=p2.x,y1=p2.y,y2=p2.y;
+
+       if(p1.x>p2.x) {
+           y1 += 5;
+           y2+=-5;
+       }
+       if(p1.x<p2.x) {
+          y1 +=5;
+           y2 +=-5;
+       }
+       if(p1.y>p2.y) {
+           x1 +=5;
+          x2 +=-5;
+       }
+       if(p1.y<p2.y) {
+          x1 +=5;
+           x2+=-5;
+       }
+        p2=shiftPoints(p1,p2,10);
+
+        g2d.drawLine(p2.x, p2.y,x1, y1);
+        g2d.drawLine(p2.x, p2.y,x2, y2);
+
+    }
+
+     private Point shiftPoints(Point p1,Point p2,int shift){
+        if(p1.x>p2.x)
+             p2.x+=shift;
+         if(p1.x<p2.x)
+             p2.x+=-shift;
+         if(p1.y>p2.y)
+             p2.y+=shift;
+         if(p1.y<p2.y)
+             p2.y+=-shift;
+         return p2;
+     }
+    protected void paintRelationOne(Graphics2D g2d, Point p1, Point p2) {
+        Point2D.Float pp1 = new Point2D.Float(p1.x, p1.y);
+        Point2D.Float pp2 = new Point2D.Float(p2.x, p2.y);
+        Point2D.Float left = getLeftArrowPoint(pp1, pp2, 30);
+        Point2D.Float right = getRightArrowPoint(pp1, pp2, 30);
+
+        g2d.drawLine(Math.round(right.x), Math.round(right.y), Math.round(left.x), Math.round(left.y));
+
+    }
+
+   /* protected void paintArrow(Graphics2D g2d, Point p1, Point p2, int width) {
         Point2D.Float pp1 = new Point2D.Float(p1.x, p1.y);
         Point2D.Float pp2 = new Point2D.Float(p2.x, p2.y);
         Point2D.Float left = getLeftArrowPoint(pp1, pp2, width);
@@ -90,7 +139,7 @@ public class ConnectLine {
 
         g2d.drawLine(p2.x, p2.y, Math.round(left.x), Math.round(left.y));
         g2d.drawLine(p2.x, p2.y, Math.round(right.x), Math.round(right.y));
-    }
+    }*/
 
   protected void paintInheritanceArrow(Graphics2D g2d, Point p1, Point p2) {
       Point2D.Float pp1 = new Point2D.Float(p1.x, p1.y);
@@ -110,6 +159,7 @@ public class ConnectLine {
             switch (lineArrow) {
                 case LINE_ARROW_DEST:
                     paintArrow(g2d, new Point(p2.x, p1.y), p2);
+                    paintRelationOne(g2d, new Point(p2.x, p1.y),p1);
                     break;
                 case LINE_ARROW_SOURCE:
                     paintArrow(g2d, new Point(p2.x, p1.y), p1);
@@ -129,6 +179,7 @@ public class ConnectLine {
             switch (lineArrow) {
                 case LINE_ARROW_DEST:
                     paintArrow(g2d, new Point(p1.x, p2.y), p2);
+                    paintRelationOne(g2d,new Point(p1.x, p2.y),p1);
                     break;
                 case LINE_ARROW_SOURCE:
                     paintArrow(g2d, new Point(p1.x, p2.y), p1);
@@ -152,6 +203,7 @@ public class ConnectLine {
             switch (lineArrow) {
                 case LINE_ARROW_DEST:
                     paintArrow(g2d, new Point(p1.x + (p2.x - p1.x) / 2, p2.y), p2);
+                    paintRelationOne(g2d,new Point(p1.x + (p2.x - p1.x) / 2, p1.y),p1);
                     break;
                 case LINE_ARROW_SOURCE:
                     paintArrow(g2d, new Point(p1.x + (p2.x - p1.x) / 2, p1.y), p1);
@@ -173,6 +225,7 @@ public class ConnectLine {
             switch (lineArrow) {
                 case LINE_ARROW_DEST:
                     paintArrow(g2d, new Point(p2.x, p1.y + (p2.y - p1.y) / 2), p2);
+                    paintRelationOne(g2d,new Point(p1.x, p1.y + (p2.y - p1.y) / 2),p1);
                     break;
                 case LINE_ARROW_SOURCE:
                     paintArrow(g2d, new Point(p1.x, p1.y + (p2.y - p1.y) / 2), p1);
