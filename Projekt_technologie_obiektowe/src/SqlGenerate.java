@@ -2,22 +2,14 @@ import java.util.ArrayList;
 
 public class SqlGenerate {
 
-    public SqlGenerate(ArrayList<Table> t){
-        tables =t;
+    public SqlGenerate(ArrayList<Table> tables){
+        this.tables =tables;
     }
 
     public String generateSqlTables(){
         String sql="";
         for(Table table :tables){
             sql= sql+"CREATE TABLE " +table.getTableName()+" (\n";
-            if(table.getSuperTables()!=null)
-                for(Table table1: table.getSuperTables())
-                    for(Column column1:table1.getColumns()){
-                        if(column1.getPKState()) {
-                            sql = sql + column1.getName() + " " + column1.getColumType() + " " + getConstrains(column1) + "\n";
-                            break;
-                        }
-                        }
             for(Column column:table.getColumns()){
                 sql=sql+column.getName()+" "+column.getColumType()+" "+getConstrains(column)+"\n";
             }
@@ -30,7 +22,6 @@ public class SqlGenerate {
         private String getRandomString(int n)
         {
             String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-                    + "0123456789"
                     + "abcdefghijklmnopqrstuvxyz";
 
             StringBuilder sb = new StringBuilder(n);
@@ -61,15 +52,13 @@ public class SqlGenerate {
             for (Table table1 : table.getSubTables()) {
                 for(Column column:table.getColumns()) {
                     if(column.getPKState()) {
-                        sql = sql + "ALTER TABLE " + table1.getTableName() + " ADD CONSTRAINT " + getRandomString(10) + " FOREIGN KEY (" + column.getName() + ") " + "REFERENCES " + table.getTableName() + "(" + column.getName() + ");\n";
+                        sql = sql + "ALTER TABLE " + table1.getTableName() + " ADD CONSTRAINT " + getRandomString(10) + " FOREIGN KEY (" + table1.getPKName() + ") " + "REFERENCES " + table.getTableName() + "(" + column.getName() + ");\n";
                         break;
                     }
                     }
             }
         }
-
         return sql;
-
     }
 
     private String getConstrains(Column column){
@@ -81,13 +70,8 @@ public class SqlGenerate {
             constrainsString= constrainsString+"NOT NULL ";
         if(constrains[2])
             constrainsString= constrainsString+"UNIQUE ";
-        if(constrains[3])
-            constrainsString= constrainsString+"CHECK "+column.getCheckArgument()+" ";
-        if(constrains[4])
-            constrainsString= constrainsString+"DEFAULT '"+column.getDefaultArgument()+"' ";
         constrainsString=constrainsString.replaceAll(" $","");
         constrainsString=constrainsString+",";
-
 
         return constrainsString;
     }

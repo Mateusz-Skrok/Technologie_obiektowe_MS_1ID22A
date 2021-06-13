@@ -10,9 +10,9 @@ import java.util.Arrays;
 public class Column extends javax.swing.JPanel {
 
 
-    public Column(Table table1) {
+    public Column(Table table) {
         initComponents();
-        table=table1;
+        this.table=table;
     }
 
 
@@ -20,15 +20,13 @@ public class Column extends javax.swing.JPanel {
     private void initComponents() {
 
         relation = new ArrayList<>();
-        jLabel1 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jButton1 = new javax.swing.JButton();
+        columnName = new javax.swing.JLabel();
+        columnType = new javax.swing.JComboBox<>();
+        columnAttributes = new javax.swing.JButton();
         PK= new JCheckBoxMenuItem("PRIMARY KEY");
         FK= new JCheckBoxMenuItem("FOREIGN KEY");
         NotNull= new JCheckBoxMenuItem("NOT NULL");
         Unique= new JCheckBoxMenuItem("UNIQUE");
-        Check= new JCheckBoxMenuItem("CHECK");
-        Default= new JCheckBoxMenuItem("DEFAULT");
         Rename= new JMenuItem("Zmien nazwe");
         Delete= new JMenuItem("Usun");
 
@@ -39,44 +37,34 @@ public class Column extends javax.swing.JPanel {
             }
         });
 
-        jLabel1.setText("jLabel1");
+        columnName.setText("jLabel1");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] {"NUMBER","CHAR", "NCHAR", "VARCHAR2","VARCHAR","NVARCHAR2","CLOB","NCLOB","LONG","DATE","BLOB",
+        columnType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] {"NUMBER","CHAR", "NCHAR", "VARCHAR2","VARCHAR","NVARCHAR2","CLOB","NCLOB","LONG","DATE","BLOB",
         "BFILE","RAW"}));
-        jComboBox1.setMaximumSize( jComboBox1.getPreferredSize() );
-        popup = new JPopupMenu();
-        popup.add(PK);
-        popup.add(FK);
-        popup.add(NotNull);
-        popup.add(Unique);
-        popup.add(Check);
-        popup.add(Default);
+        columnType.setMaximumSize( columnType.getPreferredSize() );
+        buttonPopup = new JPopupMenu();
+        buttonPopup.add(PK);
+        buttonPopup.add(FK);
+        buttonPopup.add(NotNull);
+        buttonPopup.add(Unique);
         FK.setEnabled(false);
 
-        popup2 = new JPopupMenu();
-        popup2.add(Rename);
-        popup2.add(Delete);
+        RMCPopup = new JPopupMenu();
+        RMCPopup.add(Rename);
+        RMCPopup.add(Delete);
 
 
-
-        Check.addActionListener(new java.awt.event.ActionListener() {
+        PK.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-               if(Check.getState()) {
-                   TextSetter textSetter= new TextSetter(Check);
-                   textSetter.setLabelName("Podaj parametr check");
-                   textSetter.setVisible(true);
-               } else
-                   Check.setText("CHECK");
-            }
-        });
-        Default.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                if(Default.getState()) {
-                    TextSetter textSetter= new TextSetter(Default);
-                    textSetter.setLabelName("Podaj parametr Default");
-                    textSetter.setVisible(true);
-                } else
-                    Default.setText("DEFAULT");
+                for(Column column:table.getColumns()){
+                    if(column!=Column.this&&column.getPKState()||!table.getSuperTables().isEmpty()) {
+                        Message message = new Message();
+                        message.setText("Tylko jeden klucz głowny");
+                        message.setVisible(true);
+                        PK.setState(false);
+                        break;
+                    }
+                }
             }
         });
 
@@ -85,25 +73,24 @@ public class Column extends javax.swing.JPanel {
                     TextSetter textSetter= new TextSetter(Column.this);
                     textSetter.setLabelName("Podaj nowa nazwe");
                     textSetter.setVisible(true);
-
             }
         });
 
         Delete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 if(PK.isEnabled()&&!FK.getState()) {
-                    table.getjPanel1().remove(Column.this);
-                    table.getjPanel1().revalidate();
-                    table.getjPanel1().repaint();
+                    table.getColumnPanel().remove(Column.this);
+                    table.getColumnPanel().revalidate();
+                    table.getColumnPanel().repaint();
                     table.getColumns().remove(Column.this);
                 }
             }
         });
 
-        jButton1.setText("jButton1");
-        jButton1.addMouseListener(new MouseAdapter() {
+        columnAttributes.setText("jButton1");
+        columnAttributes.addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent e) {
-                popup.show(e.getComponent(), e.getX(), e.getY());
+                buttonPopup.show(e.getComponent(), e.getX(), e.getY());
             }
         });
         setBackground(Color.yellow);
@@ -112,29 +99,29 @@ public class Column extends javax.swing.JPanel {
         layout.setHorizontalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1)
+                                .addComponent(columnName)
                                 .addGap(32, 32, 32)
-                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(columnType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(columnAttributes, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel1)
-                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jButton1))
+                                .addComponent(columnName)
+                                .addComponent(columnType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(columnAttributes))
         );
     }
 
     private void formMouseClicked(java.awt.event.MouseEvent evt) {
         if(SwingUtilities.isRightMouseButton(evt))
-        popup2.show(evt.getComponent(), evt.getX(), evt.getY());
+        RMCPopup.show(evt.getComponent(), evt.getX(), evt.getY());
     }
 
     public void setName(String name1){
         name=name1;
-        jLabel1.setText(name1);
+        columnName.setText(name1);
     }
 
     public String getName(){return name;}
@@ -142,6 +129,10 @@ public class Column extends javax.swing.JPanel {
     public boolean getPKState(){
         return PK.getState();
     }
+    public boolean getUniqueState(){return Unique.getState();}
+    public boolean getNotNullState(){return NotNull.getState();}
+
+
     public void setPKState(){
         PK.setState(true);
     }
@@ -176,24 +167,16 @@ public class Column extends javax.swing.JPanel {
         attributs[0]=PK.getState();
         attributs[1]=NotNull.getState();
         attributs[2]=Unique.getState();
-        attributs[3]=Check.getState();
-        attributs[4]=Default.getState();
 
         return attributs;
     }
 
-    public String getCheckArgument(){
-
-        return Check.getText().substring(Check.getText().indexOf("("),Check.getText().indexOf(")"));
-    }
-
-    public String getDefaultArgument(){
-
-        return Default.getText().substring(Default.getText().indexOf("("),Default.getText().indexOf(")"));
-    }
 
     public String getColumType(){
-        return jComboBox1.getItemAt(jComboBox1.getSelectedIndex());
+        String columnTypeString=columnType.getItemAt(columnType.getSelectedIndex());
+        if(columnTypeString.equals("VARCHAR2")||columnTypeString.equals("VARCHAR")||columnTypeString.equals("NVARCHAR2")||columnTypeString.equals("RAW"))
+            columnTypeString=columnTypeString+"(100)";
+        return columnTypeString;
     }
 
     public boolean getFKState(){
@@ -202,13 +185,13 @@ public class Column extends javax.swing.JPanel {
 
     private ArrayList<ArrayList<Object>> relation;
     private final Table table;
-    private JPopupMenu popup;
-    private JPopupMenu popup2;
+    private JPopupMenu buttonPopup;
+    private JPopupMenu RMCPopup;
     private String name;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JLabel jLabel1;
-    private JCheckBoxMenuItem PK,NotNull,Unique,Check,Default,FK;
+    private javax.swing.JButton columnAttributes;
+    private javax.swing.JComboBox<String> columnType;
+    private javax.swing.JLabel columnName;
+    private JCheckBoxMenuItem PK,NotNull,Unique,FK;
     private JMenuItem Rename,Delete;
 
 }

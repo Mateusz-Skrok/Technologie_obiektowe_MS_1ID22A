@@ -10,7 +10,7 @@ public class Table extends javax.swing.JPanel {
 
 
     public Table(MainMenu jFrame) {
-        frame=jFrame;
+        mainPanel =jFrame;
         initComponents();
     }
 
@@ -22,9 +22,9 @@ public class Table extends javax.swing.JPanel {
         subTables = new ArrayList<Table>();
         superTables = new ArrayList<Table>();
 
-        jLabel1 = new javax.swing.JLabel();
+        tableNameLabel = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jPanel1 = new javax.swing.JPanel();
+        columnPanel = new javax.swing.JPanel();
         rightClickMenu=new JPopupMenu();
         rename=new JMenuItem("Zmien nazwe");
         delete=new JMenuItem("Usun");
@@ -37,7 +37,7 @@ public class Table extends javax.swing.JPanel {
         rightClickMenu.add(removeRelation);
 
         setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jPanel1.addMouseListener(new java.awt.event.MouseAdapter() {
+        columnPanel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 formMouseClicked(evt);
             }
@@ -47,8 +47,8 @@ public class Table extends javax.swing.JPanel {
                 formMouseClicked(evt);
             }
         });
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("jLabel1");
+        tableNameLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        tableNameLabel.setText("jLabel1");
 
         this.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
@@ -59,41 +59,41 @@ public class Table extends javax.swing.JPanel {
 
         add.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                addActionPerformed(evt);
             }
         });
 
 
         delete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                deleteActionPerformed(evt);
             }
         });
 
 
         rename.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                renameActionPerformed(evt);
             }
         });
-        jPanel1.setLayout(new javax.swing.BoxLayout(jPanel1, BoxLayout.Y_AXIS));
-        jScrollPane1.setViewportView(jPanel1);
+        columnPanel.setLayout(new javax.swing.BoxLayout(columnPanel, BoxLayout.Y_AXIS));
+        jScrollPane1.setViewportView(columnPanel);
 
         setBackground(java.awt.Color.orange);
-        jPanel1.setBackground(java.awt.Color.yellow);
-        jPanel1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        columnPanel.setBackground(java.awt.Color.yellow);
+        columnPanel.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(tableNameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
                                 .addContainerGap()
-                                .addComponent(jLabel1)
+                                .addComponent(tableNameLabel)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE)
                                 .addContainerGap())
@@ -107,18 +107,18 @@ public class Table extends javax.swing.JPanel {
             rightClickMenu.show(evt.getComponent(), evt.getX(), evt.getY());
     }
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
+    private void addActionPerformed(java.awt.event.ActionEvent evt) {
         Column column = new Column(this);
-        TextSetter textSetter = new TextSetter(jPanel1,column,columns);
+        TextSetter textSetter = new TextSetter(columnPanel,column,columns);
         textSetter.setLabelName("Podaj nazwe atrybutu");
         textSetter.setVisible(true);
 
     }
 
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {
-        frame.getjPanel2().remove(this);
-        frame.getTables().remove(this);
+    private void deleteActionPerformed(java.awt.event.ActionEvent evt) {
+        mainPanel.getDiagramPanel().remove(this);
+        mainPanel.getTables().remove(this);
         for (JConnector jConnector : jConnectors) {
             Table tableSource=(Table) jConnector.getSource();
             for(Column column:tableSource.getColumns())
@@ -126,24 +126,24 @@ public class Table extends javax.swing.JPanel {
             Table tableDestination=(Table) jConnector.getDest();
             for(Column column:tableDestination.getColumns())
                 column.enablePK();
-            frame.getjPanel2().remove(jConnector);
+            mainPanel.getDiagramPanel().remove(jConnector);
         }
         for(Table table:superTables)
             table.getSubTables().remove(this);
         for(Table table:subTables)
             table.getSuperTables().remove(this);
-        frame.getjPanel2().revalidate();
-        frame.getjPanel2().repaint();
+        mainPanel.getDiagramPanel().revalidate();
+        mainPanel.getDiagramPanel().repaint();
     }
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {
+    private void renameActionPerformed(java.awt.event.ActionEvent evt) {
         TextSetter textSetter = new TextSetter(this);
         textSetter.setLabelName("Zmien nazwe tabeli");
         textSetter.setVisible(true);
 
     }
 
-    public void setRelationDeleteMenuList(){
+    public void setRelationDeleteMenuList(boolean inheritence){
         removeRelation.removeAll();
         for (JConnector jConnector : jConnectors) {
             Table tableSource=(Table) jConnector.getSource();
@@ -151,7 +151,10 @@ public class Table extends javax.swing.JPanel {
                 JMenuItem newDeleteRelationMenu = new JMenuItem(tableSource.getTableName());
                 newDeleteRelationMenu.addActionListener(new java.awt.event.ActionListener() {
                     public void actionPerformed(java.awt.event.ActionEvent evt) {
-                        removeRelation(evt,newDeleteRelationMenu);
+                        if(!inheritence)
+                            removeRelation(evt,newDeleteRelationMenu);
+                        else
+                            removeInheritence(evt,newDeleteRelationMenu);
                     }
                 });
                 removeRelation.add(newDeleteRelationMenu);
@@ -161,12 +164,43 @@ public class Table extends javax.swing.JPanel {
                 JMenuItem newDeleteRelationMenu = new JMenuItem(tableDestination.getTableName());
                 newDeleteRelationMenu.addActionListener(new java.awt.event.ActionListener() {
                     public void actionPerformed(java.awt.event.ActionEvent evt) {
-                        removeRelation(evt,newDeleteRelationMenu);
+                        if(!inheritence)
+                            removeRelation(evt,newDeleteRelationMenu);
+                        else
+                            removeInheritence(evt,newDeleteRelationMenu);
                     }
                 });
                 removeRelation.add(newDeleteRelationMenu);
             }
         }
+    }
+
+    private void removeInheritence(java.awt.event.ActionEvent evt,JMenuItem menuItem) {
+        try {
+            for (JConnector jConnector : jConnectors) {
+                Table tableDestination = (Table) jConnector.getDest();
+                Table tableSource = (Table) jConnector.getSource();
+                if(tableDestination.getTableName().equals(menuItem.getText())|| tableSource.getTableName().equals(menuItem.getText())){
+                    mainPanel.getDiagramPanel().remove(jConnector);
+                    tableDestination.getjConnectors().remove(jConnector);
+                    tableSource.getjConnectors().remove(jConnector);
+                    tableSource.getSuperTables().remove(tableDestination);
+                    tableDestination.getSubTables().remove(tableSource);
+                    for (Column column:tableDestination.getColumns())
+                        if(column.getPKState()&&tableDestination.getjConnectors().isEmpty())
+                            column.enablePK();
+                    for (Column column:tableSource.getColumns())
+                        if(column.getPKState()&&tableSource.getjConnectors().isEmpty()) {
+                            column.enablePK();
+                            column.FKChangeStateToFalse();
+                        }
+                    tableDestination.setRelationDeleteMenuList(true);
+                    tableSource.setRelationDeleteMenuList(true);
+                }
+            }
+            }catch (Exception e){
+                System.out.println(e);
+            }
     }
 
     private void removeRelation(java.awt.event.ActionEvent evt,JMenuItem menuItem){
@@ -175,7 +209,7 @@ public class Table extends javax.swing.JPanel {
               Table tableDestination = (Table) jConnector.getDest();
               Table tableSource = (Table) jConnector.getSource();
               if (tableDestination.getTableName().equals(menuItem.getText()) || tableSource.getTableName().equals(menuItem.getText())) {
-                  frame.getjPanel2().remove(jConnector);
+                  mainPanel.getDiagramPanel().remove(jConnector);
                   tableDestination.getjConnectors().remove(jConnector);
                   tableSource.getjConnectors().remove(jConnector);
                   if(tableDestination.equals(this)) {
@@ -200,23 +234,27 @@ public class Table extends javax.swing.JPanel {
                               column.FKChangeStateToFalse();
                       }
                   }
-                  tableDestination.setRelationDeleteMenuList();
-                  tableSource.setRelationDeleteMenuList();
-                  if (jConnectors.isEmpty()) {
+                  tableDestination.setRelationDeleteMenuList(false);
+                  tableSource.setRelationDeleteMenuList(false);
+                  if (tableDestination.getjConnectors().isEmpty()) {
+                      for (Column column : tableDestination.getColumns())
+                          column.enablePK();
+                  }
+                  if (tableSource.getjConnectors().isEmpty()) {
                       for (Column column : tableSource.getColumns())
                           column.enablePK();
                   }
               }
           }
-          frame.getjPanel2().revalidate();
-          frame.getjPanel2().repaint();
+          mainPanel.getDiagramPanel().revalidate();
+          mainPanel.getDiagramPanel().repaint();
 
       }catch (Exception e){
           System.out.println(e);
       }
     }
     public void setTableName(String name){
-        jLabel1.setText(name);
+        tableNameLabel.setText(name);
         tableName =name;
         this.setName(name);
     }
@@ -224,12 +262,34 @@ public class Table extends javax.swing.JPanel {
     private void tableMouseReleased(java.awt.event.MouseEvent evt) {
         if(!columns.isEmpty())
         setPreferredSize(new Dimension(columns.get(0).getWidth()+15,this.getHeight()));
-        frame.getjPanel2().revalidate();
-        frame.getjPanel2().repaint();
+        mainPanel.getDiagramPanel().revalidate();
+        mainPanel.getDiagramPanel().repaint();
 
     }
 
+    public String getPKName(){
+        for(Column column:columns) {
+            if (column.getPKState()) {
+                return column.getName();
+            }
+        }
+        return null;
+    }
 
+    public void disablePKInTable(){
+        for(Column column:columns)
+            if(column.getPKState())
+                column.disablePK();
+    }
+
+    public Column getColumnWithPK(){
+        for(Column column:columns) {
+            if (column.getPKState()) {
+                return column;
+            }
+        }
+        return null;
+    }
 
     public boolean PKAvailable(){
         for(Column column:columns) {
@@ -240,11 +300,11 @@ public class Table extends javax.swing.JPanel {
             return false;
     }
 
-    public javax.swing.JLabel getjLabel1(){
-        return this.jLabel1;
+    public javax.swing.JLabel getTableNameLabel(){
+        return this.tableNameLabel;
     }
-    public javax.swing.JPanel getjPanel1(){
-        return jPanel1;
+    public javax.swing.JPanel getColumnPanel(){
+        return columnPanel;
     }
     public String getTableName(){return tableName;}
     public List<Column> getColumns() {
@@ -266,9 +326,9 @@ public class Table extends javax.swing.JPanel {
     private List<Table> superTables;
     private Message message;
     private String tableName;
-    private final MainMenu frame;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JPanel jPanel1;
+    private final MainMenu mainPanel;
+    private javax.swing.JLabel tableNameLabel;
+    private javax.swing.JPanel columnPanel;
     private javax.swing.JScrollPane jScrollPane1;
     private JPopupMenu rightClickMenu;
     private JMenuItem rename,delete,add;

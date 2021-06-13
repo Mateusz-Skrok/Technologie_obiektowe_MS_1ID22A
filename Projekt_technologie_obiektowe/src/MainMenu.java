@@ -30,267 +30,261 @@ public class MainMenu extends javax.swing.JFrame {
         tables =new ArrayList<Table>();
         message =  new Message();
 
-        jDialog2 = new javax.swing.JDialog();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jComboBox2 = new javax.swing.JComboBox<>();
-        jComboBox3 = new javax.swing.JComboBox<>();
-        jComboBox4 = new javax.swing.JComboBox<>();
-        jButton8 = new javax.swing.JButton();
-        jButton9 = new javax.swing.JButton();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        relationDialogWindow = new javax.swing.JDialog();
+        relationTypeLabel = new javax.swing.JLabel();
+        tableLabel = new javax.swing.JLabel();
+        tableRelationComboBox1 = new javax.swing.JComboBox<>();
+        tableRelationComboBox2 = new javax.swing.JComboBox<>();
+        attributsComboBox1 = new javax.swing.JComboBox<>();
+        attributsComboBox2 = new javax.swing.JComboBox<>();
+        relationCancelButton = new javax.swing.JButton();
+        relationCreateButton = new javax.swing.JButton();
+        attributLabel = new javax.swing.JLabel();
+        table1Label = new javax.swing.JLabel();
+        table2Label = new javax.swing.JLabel();
+        createTableButton = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jPanel2 = new javax.swing.JPanel(new DragLayout());
-        jButton2 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
-        jButton10 = new javax.swing.JButton();
-        jButton11 = new javax.swing.JButton();
-        jDialog3 = new javax.swing.JDialog();
-        jLabel7 = new javax.swing.JLabel();
-        jComboBox5 = new javax.swing.JComboBox<>();
-        jComboBox6 = new javax.swing.JComboBox<>();
-        jButton12 = new javax.swing.JButton();
-        jButton13 = new javax.swing.JButton();
-        jLabel10 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
+        diagramPanel = new javax.swing.JPanel(new DragLayout());
+        clearButton = new javax.swing.JButton();
+        oneToManyButton = new javax.swing.JButton();
+        oneToOneButton = new javax.swing.JButton();
+        ManyToManyButton = new javax.swing.JButton();
+        SQLGenerateButton = new javax.swing.JButton();
+        inheretenceButton = new javax.swing.JButton();
+        inheritenceDialog = new javax.swing.JDialog();
+        inhertienceLabel = new javax.swing.JLabel();
+        inheritenceComboBox1 = new javax.swing.JComboBox<>();
+        inheritenceComboBox2 = new javax.swing.JComboBox<>();
+        inheritenceCancelButton = new javax.swing.JButton();
+        inheritenceCreateButton = new javax.swing.JButton();
+        baseLabel = new javax.swing.JLabel();
+        subtableLabel = new javax.swing.JLabel();
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("jLabel2");
-        jLabel2.setVerifyInputWhenFocusTarget(false);
+        relationTypeLabel.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        relationTypeLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        relationTypeLabel.setText("jLabel2");
+        relationTypeLabel.setVerifyInputWhenFocusTarget(false);
 
-        jLabel3.setText("Tabela");
+        tableLabel.setText("Tabela");
 
 
-        jButton8.setText("Anuluj");
-        jButton8.addActionListener(new java.awt.event.ActionListener() {
+        relationCancelButton.setText("Anuluj");
+        relationCancelButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton8ActionPerformed(evt);
+                relationCancelButtonActionPerformed(evt);
             }
         });
-        jButton9.setText("Utworz");
-        jButton9.addActionListener(new java.awt.event.ActionListener() {
+        relationCreateButton.setText("Utworz");
+        relationCreateButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton9ActionPerformed(evt);
+                relationCreateButtonActionPerformed(evt);
             }
         });
-        jLabel4.setText("Atrybut");
+        attributLabel.setText("Atrybut");
 
-        jLabel5.setText("Tabela1");
+        table1Label.setText("Tabela1");
 
-        jLabel6.setText("Tabela2");
+        table2Label.setText("Tabela2");
 
-        jComboBox1.addItemListener(new ItemListener() {
+        tableRelationComboBox1.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
-                jComboBox1ItemChange(e);
+                tableRelationComboBox1ItemChange(e);
             }
         });
-        jComboBox2.addItemListener(new ItemListener() {
+        tableRelationComboBox2.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
-                jComboBox2ItemChange(e);
+                tableRelationComboBox2ItemChange(e);
             }
         });
 
-        jDialog2.setLocationRelativeTo(null);
-        jDialog2.setSize(new java.awt.Dimension(400, 225));
+        relationDialogWindow.setLocationRelativeTo(null);
+        relationDialogWindow.setSize(new java.awt.Dimension(400, 225));
 
-        javax.swing.GroupLayout jDialog2Layout = new javax.swing.GroupLayout(jDialog2.getContentPane());
-        jDialog2.getContentPane().setLayout(jDialog2Layout);
+        javax.swing.GroupLayout jDialog2Layout = new javax.swing.GroupLayout(relationDialogWindow.getContentPane());
+        relationDialogWindow.getContentPane().setLayout(jDialog2Layout);
         jDialog2Layout.setHorizontalGroup(
                 jDialog2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(relationTypeLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jDialog2Layout.createSequentialGroup()
                                 .addContainerGap()
                                 .addGroup(jDialog2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup(jDialog2Layout.createSequentialGroup()
-                                                .addComponent(jLabel5)
+                                                .addComponent(table1Label)
                                                 .addGap(18, 18, 18))
                                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDialog2Layout.createSequentialGroup()
-                                                .addComponent(jLabel6)
+                                                .addComponent(table2Label)
                                                 .addGap(18, 18, 18)))
                                 .addGroup(jDialog2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                         .addGroup(jDialog2Layout.createSequentialGroup()
-                                                .addComponent(jButton8)
+                                                .addComponent(relationCancelButton)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(jButton9))
+                                                .addComponent(relationCreateButton))
                                         .addGroup(jDialog2Layout.createSequentialGroup()
                                                 .addGroup(jDialog2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(tableRelationComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(tableRelationComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                         .addGroup(jDialog2Layout.createSequentialGroup()
                                                                 .addGap(45, 45, 45)
-                                                                .addComponent(jLabel3)))
+                                                                .addComponent(tableLabel)))
                                                 .addGroup(jDialog2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDialog2Layout.createSequentialGroup()
                                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                                .addComponent(jLabel4)
+                                                                .addComponent(attributLabel)
                                                                 .addGap(38, 38, 38))
                                                         .addGroup(jDialog2Layout.createSequentialGroup()
                                                                 .addGap(33, 33, 33)
                                                                 .addGroup(jDialog2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                                        .addComponent(jComboBox3, 0, 115, Short.MAX_VALUE)
-                                                                        .addComponent(jComboBox4, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
+                                                                        .addComponent(attributsComboBox1, 0, 115, Short.MAX_VALUE)
+                                                                        .addComponent(attributsComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
                                 .addContainerGap(21, Short.MAX_VALUE))
         );
         jDialog2Layout.setVerticalGroup(
                 jDialog2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jDialog2Layout.createSequentialGroup()
                                 .addContainerGap()
-                                .addComponent(jLabel2)
+                                .addComponent(relationTypeLabel)
                                 .addGap(18, 18, 18)
                                 .addGroup(jDialog2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(jLabel3)
-                                        .addComponent(jLabel4))
+                                        .addComponent(tableLabel)
+                                        .addComponent(attributLabel))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jDialog2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jLabel5))
+                                        .addComponent(tableRelationComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(attributsComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(table1Label))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jDialog2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jLabel6))
+                                        .addComponent(tableRelationComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(attributsComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(table2Label))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
                                 .addGroup(jDialog2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(jButton8)
-                                        .addComponent(jButton9))
+                                        .addComponent(relationCancelButton)
+                                        .addComponent(relationCreateButton))
                                 .addContainerGap())
         );
 
-        jLabel7.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel7.setText("Dziedziczenie");
-        jLabel7.setVerifyInputWhenFocusTarget(false);
+        inhertienceLabel.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        inhertienceLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        inhertienceLabel.setText("Dziedziczenie");
+        inhertienceLabel.setVerifyInputWhenFocusTarget(false);
 
 
-        jButton12.setText("Anuluj");
-        jButton12.addActionListener(new java.awt.event.ActionListener() {
+        inheritenceCancelButton.setText("Anuluj");
+        inheritenceCancelButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton12ActionPerformed(evt);
+                inheritenceCancelButtonActionPerformed(evt);
             }
         });
 
-        jButton13.setText("Utworz");
-        jButton13.addActionListener(new java.awt.event.ActionListener() {
+        inheritenceCreateButton.setText("Utworz");
+        inheritenceCreateButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton13ActionPerformed(evt);
+                inheritenceCreateButtonActionPerformed(evt);
             }
         });
 
-        jLabel10.setText("Bazowa");
+        baseLabel.setText("Bazowa");
 
-        jLabel11.setText("Pochodna");
+        subtableLabel.setText("Pochodna");
 
-        jDialog3.setLocationRelativeTo(null);
-        jDialog3.setSize(new java.awt.Dimension(400, 225));
+        inheritenceDialog.setLocationRelativeTo(null);
+        inheritenceDialog.setSize(new java.awt.Dimension(400, 225));
 
-        javax.swing.GroupLayout jDialog3Layout = new javax.swing.GroupLayout(jDialog3.getContentPane());
-        jDialog3.getContentPane().setLayout(jDialog3Layout);
+        javax.swing.GroupLayout jDialog3Layout = new javax.swing.GroupLayout(inheritenceDialog.getContentPane());
+        inheritenceDialog.getContentPane().setLayout(jDialog3Layout);
         jDialog3Layout.setHorizontalGroup(
                 jDialog3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(inhertienceLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jDialog3Layout.createSequentialGroup()
                                 .addContainerGap()
                                 .addGroup(jDialog3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup(jDialog3Layout.createSequentialGroup()
-                                                .addComponent(jLabel10)
+                                                .addComponent(baseLabel)
                                                 .addGap(18, 18, 18))
                                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDialog3Layout.createSequentialGroup()
-                                                .addComponent(jLabel11)
+                                                .addComponent(subtableLabel)
                                                 .addGap(18, 18, 18)))
                                 .addGroup(jDialog3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(jComboBox5, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(inheritenceComboBox1, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jDialog3Layout.createSequentialGroup()
-                                                .addComponent(jButton12)
+                                                .addComponent(inheritenceCancelButton)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 77, Short.MAX_VALUE)
-                                                .addComponent(jButton13))
-                                        .addComponent(jComboBox6, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                                .addComponent(inheritenceCreateButton))
+                                        .addComponent(inheritenceComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addGap(21, 21, 21))
         );
         jDialog3Layout.setVerticalGroup(
                 jDialog3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jDialog3Layout.createSequentialGroup()
                                 .addContainerGap()
-                                .addComponent(jLabel7)
+                                .addComponent(inhertienceLabel)
                                 .addGap(38, 38, 38)
                                 .addGroup(jDialog3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(jComboBox5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jLabel10))
+                                        .addComponent(inheritenceComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(baseLabel))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jDialog3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(jComboBox6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jLabel11))
+                                        .addComponent(inheritenceComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(subtableLabel))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
                                 .addGroup(jDialog3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(jButton12)
-                                        .addComponent(jButton13))
+                                        .addComponent(inheritenceCancelButton)
+                                        .addComponent(inheritenceCreateButton))
                                 .addContainerGap())
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jButton1.setText("Dodaj tabele");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        createTableButton.setText("Dodaj tabele");
+        createTableButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                createTableButtonActionPerformed(evt);
             }
         });
 
-        jPanel2.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                jPanel2MousePressed(evt);
-            }
+        jScrollPane2.setViewportView(diagramPanel);
 
-        });
-        jScrollPane2.setViewportView(jPanel2);
-
-        jButton2.setText("Wyczysc");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        clearButton.setText("Wyczysc");
+        clearButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                clearButtonActionPerformed(evt);
             }
         });
 
-        jButton5.setText("1_do_w");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        oneToManyButton.setText("1_do_w");
+        oneToManyButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                oneToManyButtonActionPerformed(evt);
             }
         });
-        jButton6.setText("1_do_1");
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
+        oneToOneButton.setText("1_do_1");
+        oneToOneButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
+                oneToOneButtonActionPerformed(evt);
             }
         });
-        jButton7.setText("w_do_w");
-        jButton7.addActionListener(new java.awt.event.ActionListener() {
+        ManyToManyButton.setText("w_do_w");
+        ManyToManyButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton7ActionPerformed(evt);
+                ManyToManyButtonActionPerformed(evt);
             }
         });
-        jButton10.setText("SQL");
-        jButton10.addActionListener(new java.awt.event.ActionListener() {
+        SQLGenerateButton.setText("SQL");
+        SQLGenerateButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton10ActionPerformed(evt);
+                SQLGenerateButtonActionPerformed(evt);
             }
         });
-        jButton11.setText("Dziedziczenie");
-        jButton11.addActionListener(new java.awt.event.ActionListener() {
+        inheretenceButton.setText("Dziedziczenie");
+        inheretenceButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton11ActionPerformed(evt);
+                inheretenceButtonActionPerformed(evt);
             }
         });
-        jPanel2.setBackground(new java.awt.Color(255, 255, 204));
+        diagramPanel.setBackground(new java.awt.Color(255, 255, 204));
         setBackground(Color.yellow);
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -300,32 +294,32 @@ public class MainMenu extends javax.swing.JFrame {
                                 .addGap(0, 0, 0)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                                .addComponent(jButton11, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(jButton7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(jButton10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                        .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 97, Short.MAX_VALUE)
-                                        .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                                .addComponent(inheretenceButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(oneToManyButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(oneToOneButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(ManyToManyButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(SQLGenerateButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addComponent(clearButton, javax.swing.GroupLayout.DEFAULT_SIZE, 97, Short.MAX_VALUE)
+                                        .addComponent(createTableButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 626, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton1)
+                                .addComponent(createTableButton)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton5)
+                                .addComponent(oneToManyButton)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton6)
+                                .addComponent(oneToOneButton)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton7)
+                                .addComponent(ManyToManyButton)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton11)
+                                .addComponent(inheretenceButton)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton10)
+                                .addComponent(SQLGenerateButton)
                                 .addGap(42, 42, 42)
-                                .addComponent(jButton2)
+                                .addComponent(clearButton)
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -336,126 +330,152 @@ public class MainMenu extends javax.swing.JFrame {
 
 
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
+    private void createTableButtonActionPerformed(java.awt.event.ActionEvent evt) {
         Table table = new Table(this);
-        TextSetter textSetter = new TextSetter(table,jPanel2, tables,cm);
+        TextSetter textSetter = new TextSetter(table, diagramPanel, tables,cm);
         textSetter.setLabelName("Nazwa tabeli");
         textSetter.setVisible(true);
 
     }
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {
-        jPanel2.removeAll();
-        jPanel2.revalidate();
-        jPanel2.repaint();
+    private void clearButtonActionPerformed(java.awt.event.ActionEvent evt) {
+        diagramPanel.removeAll();
+        diagramPanel.revalidate();
+        diagramPanel.repaint();
         tables.clear();
     }
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {
-        loadTableToComboBox(jComboBox1,jComboBox2);
-        if(jComboBox1.getItemCount()!=0)
-        loadAtrributsToComboBox(jComboBox1.getItemAt(jComboBox1.getSelectedIndex()),1,0);
-        if(jComboBox2.getItemCount()!=0)
-        loadAtrributsToComboBox(jComboBox2.getItemAt(jComboBox2.getSelectedIndex()),2,0);
-        jDialog2.setVisible(true);
-        jLabel2.setText("Jeden do wielu");
+    private void oneToManyButtonActionPerformed(java.awt.event.ActionEvent evt) {
+        loadTableToComboBox(tableRelationComboBox1, tableRelationComboBox2);
+        if(tableRelationComboBox1.getItemCount()!=0)
+        loadAtrributsToComboBox(tableRelationComboBox1.getItemAt(tableRelationComboBox1.getSelectedIndex()),1,0);
+        if(tableRelationComboBox2.getItemCount()!=0)
+        loadAtrributsToComboBox(tableRelationComboBox2.getItemAt(tableRelationComboBox2.getSelectedIndex()),2,0);
+        relationDialogWindow.setVisible(true);
+        relationTypeLabel.setText("Jeden do wielu");
+        table1Label.setText("Wielu");
+        table2Label.setText("Jeden");
 
     }
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {
-        loadTableToComboBox(jComboBox1,jComboBox2);
-        if(jComboBox1.getItemCount()!=0)
-            loadAtrributsToComboBox(jComboBox1.getItemAt(jComboBox1.getSelectedIndex()),1,1);
-        if(jComboBox2.getItemCount()!=0)
-            loadAtrributsToComboBox(jComboBox2.getItemAt(jComboBox2.getSelectedIndex()),2,1);
-        jDialog2.setVisible(true);
-        jLabel2.setText("Jeden do jednego");
+    private void oneToOneButtonActionPerformed(java.awt.event.ActionEvent evt) {
+        loadTableToComboBox(tableRelationComboBox1, tableRelationComboBox2);
+        if(tableRelationComboBox1.getItemCount()!=0)
+            loadAtrributsToComboBox(tableRelationComboBox1.getItemAt(tableRelationComboBox1.getSelectedIndex()),1,1);
+        if(tableRelationComboBox2.getItemCount()!=0)
+            loadAtrributsToComboBox(tableRelationComboBox2.getItemAt(tableRelationComboBox2.getSelectedIndex()),2,1);
+        relationDialogWindow.setVisible(true);
+        relationTypeLabel.setText("Jeden do jednego");
+        table1Label.setText("Jeden");
+        table2Label.setText("Jeden");
 
     }
-    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {
-        loadTableToComboBox(jComboBox1,jComboBox2);
-        if(jComboBox1.getItemCount()!=0)
-            loadAtrributsToComboBox(jComboBox1.getItemAt(jComboBox1.getSelectedIndex()),1,2);
-        if(jComboBox2.getItemCount()!=0)
-            loadAtrributsToComboBox(jComboBox2.getItemAt(jComboBox2.getSelectedIndex()),2,2);
-        jDialog2.setVisible(true);
-        jLabel2.setText("Wielu do wielu");
+    private void ManyToManyButtonActionPerformed(java.awt.event.ActionEvent evt) {
+        loadTableToComboBox(tableRelationComboBox1, tableRelationComboBox2);
+        if(tableRelationComboBox1.getItemCount()!=0)
+            loadAtrributsToComboBox(tableRelationComboBox1.getItemAt(tableRelationComboBox1.getSelectedIndex()),1,2);
+        if(tableRelationComboBox2.getItemCount()!=0)
+            loadAtrributsToComboBox(tableRelationComboBox2.getItemAt(tableRelationComboBox2.getSelectedIndex()),2,2);
+        relationDialogWindow.setVisible(true);
+        relationTypeLabel.setText("Wielu do wielu");
+        table1Label.setText("Wielu");
+        table2Label.setText("Wielu");
 
     }
 
-    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {
-        jDialog2.setVisible(false);
+    private void relationCancelButtonActionPerformed(java.awt.event.ActionEvent evt) {
+        relationDialogWindow.setVisible(false);
 
     }
 
 
-    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {
+    private void relationCreateButtonActionPerformed(java.awt.event.ActionEvent evt) {
 
-        Table table1= searchTable(jComboBox1.getItemAt(jComboBox1.getSelectedIndex()));
-        Table table2= searchTable(jComboBox2.getItemAt(jComboBox2.getSelectedIndex()));
+        Table table1= searchTable(tableRelationComboBox1.getItemAt(tableRelationComboBox1.getSelectedIndex()));
+        Table table2= searchTable(tableRelationComboBox2.getItemAt(tableRelationComboBox2.getSelectedIndex()));
+        Column column = searchColumn(attributsComboBox1.getItemAt(attributsComboBox1.getSelectedIndex()),table1);
+        Column column2 = searchColumn(attributsComboBox2.getItemAt(attributsComboBox2.getSelectedIndex()),table2);
         JConnector connectLine,connectLine2;
         if(table1!=null&&table2!=null&&table1!=table2) {
-            if(jLabel2.getText().equals("Jeden do wielu")) {
+            if(relationTypeLabel.getText().equals("Jeden do wielu")) {
                 connectLine = new JConnector(table2, table1, LINE_ARROW_DEST, Color.BLACK);
-                Column column = searchColumn(jComboBox3.getItemAt(jComboBox3.getSelectedIndex()),table1);
-                Column column2 = searchColumn(jComboBox4.getItemAt(jComboBox4.getSelectedIndex()),table2);
-                if(!column2.getPKState())
-                    column2.setPKState();
                 column.FKChangeStateToTrue();
                 column.addRelation(table2,column2);
                 column2.disablePK();
+                saveRelaationConectors(table1,connectLine,false);
+                saveRelaationConectors(table2,connectLine,false);
             }
-            else if(jLabel2.getText().equals("Jeden do jednego")) {
-                connectLine = new JConnector(table1, table2, LINE_ARROW_NONE, Color.BLACK);
-                Column column = searchColumn(jComboBox3.getItemAt(jComboBox3.getSelectedIndex()),table1);
-                Column column2 = searchColumn(jComboBox4.getItemAt(jComboBox4.getSelectedIndex()),table2);
-                column.FKChangeStateToTrue();
-                column.addRelation(table2,column2);
-                column2.disablePK();
-
+            else if(relationTypeLabel.getText().equals("Jeden do jednego")) {
+                connectLine = new JConnector(table2, table1, LINE_ARROW_NONE, Color.BLACK);
+                if(column2.getPKState()){
+                    column.FKChangeStateToTrue();
+                    column.addRelation(table2,column2);
+                    column2.disablePK();}
+                else if(column.getPKState()) {
+                    connectLine = new JConnector(table1, table2, LINE_ARROW_NONE, Color.BLACK);
+                    column.disablePK();
+                    column2.FKChangeStateToTrue();
+                    column2.addRelation(table1, column);
+                }
+                else{
+                    column.FKChangeStateToTrue();
+                    column.addRelation(table2,column2);
+                    column2.setPKState();
+                    column2.disablePK();
+                }
+                saveRelaationConectors(table1,connectLine,false);
+                saveRelaationConectors(table2,connectLine,false);
             }
             else {
-                Table panle = new Table(this);
-                        panle.setTableName(jComboBox1.getItemAt(jComboBox1.getSelectedIndex())+"_"+jComboBox2.getItemAt(jComboBox2.getSelectedIndex()));
-                        Column column = new Column(panle);
-                        Column column1 = new Column(panle);
-                        column.setName(jComboBox1.getItemAt(jComboBox1.getSelectedIndex())+"_id");
-                        column1.setName(jComboBox2.getItemAt(jComboBox2.getSelectedIndex())+"_id");
-                        Column columnTable1 = searchColumn(jComboBox3.getItemAt(jComboBox3.getSelectedIndex()),table1);
-                        Column columnTable2 = searchColumn(jComboBox4.getItemAt(jComboBox4.getSelectedIndex()),table2);
-                        column.FKChangeStateToTrue();
-                        column1.FKChangeStateToTrue();
-                        panle.getColumns().add(column);
-                        panle.getColumns().add(column1);
-                        panle.getjPanel1().add(column);
-                        panle.getjPanel1().add(column1);
-                        column.addRelation(table1,columnTable1);
-                        column1.addRelation(table2,columnTable2);
-                        columnTable1.disablePK();
-                        columnTable2.disablePK();
-                        jPanel2.add(panle);
-                        tables.add(panle);
-                        cm.registerComponent(panle);
-                connectLine2 = new JConnector(table1, panle, LINE_ARROW_DEST, Color.BLACK);
-                connectLine = new JConnector(table2, panle, LINE_ARROW_DEST, Color.BLACK);
-                jPanel2.add(connectLine2);
-                panle.getjConnectors().add(connectLine);
-                panle.getjConnectors().add(connectLine2);
-                panle.setRelationDeleteMenuList();
-
+                Table subTable = new Table(this);
+                createSubTableForManyToManyRelation(subTable,table1,table2);
+                connectLine2 = new JConnector(table1, subTable, LINE_ARROW_DEST, Color.BLACK);
+                connectLine = new JConnector(table2, subTable, LINE_ARROW_DEST, Color.BLACK);
+                diagramPanel.add(connectLine2);
+                subTable.getjConnectors().add(connectLine);
+                subTable.getjConnectors().add(connectLine2);
+                subTable.setRelationDeleteMenuList(false);
             }
-            table1.getjConnectors().add(connectLine);
-            table2.getjConnectors().add(connectLine);
-            table1.setRelationDeleteMenuList();
-            table2.setRelationDeleteMenuList();
-            jPanel2.add(connectLine);
-            jPanel2.revalidate();
-            jPanel2.repaint();
-            jDialog2.setVisible(false);
+            diagramPanel.add(connectLine);
+            diagramPanel.revalidate();
+            diagramPanel.repaint();
+            relationDialogWindow.setVisible(false);
         }
-        else System.out.println("Error");
+        else {
+            message.setText("Wybrano złe tabele");
+            message.setVisible(true);
+        }
     }
 
-    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {
+    private void saveRelaationConectors(Table table,JConnector connectLine,boolean inheritence){
+        table.getjConnectors().add(connectLine);
+        table.setRelationDeleteMenuList(inheritence);
+    }
+
+    private void createSubTableForManyToManyRelation(Table subTable,Table table1,Table table2){
+
+        subTable.setTableName(tableRelationComboBox1.getItemAt(tableRelationComboBox1.getSelectedIndex())+"_"+ tableRelationComboBox2.getItemAt(tableRelationComboBox2.getSelectedIndex()));
+        Column column = new Column(subTable);
+        Column column1 = new Column(subTable);
+        column.setName(tableRelationComboBox1.getItemAt(tableRelationComboBox1.getSelectedIndex())+"_id");
+        column1.setName(tableRelationComboBox2.getItemAt(tableRelationComboBox2.getSelectedIndex())+"_id");
+        Column columnTable1 = searchColumn(attributsComboBox1.getItemAt(attributsComboBox1.getSelectedIndex()),table1);
+        Column columnTable2 = searchColumn(attributsComboBox2.getItemAt(attributsComboBox2.getSelectedIndex()),table2);
+        column.FKChangeStateToTrue();
+        column1.FKChangeStateToTrue();
+        subTable.getColumns().add(column);
+        subTable.getColumns().add(column1);
+        subTable.getColumnPanel().add(column);
+        subTable.getColumnPanel().add(column1);
+        column.addRelation(table1,columnTable1);
+        column1.addRelation(table2,columnTable2);
+        columnTable1.disablePK();
+        columnTable2.disablePK();
+        diagramPanel.add(subTable);
+        tables.add(subTable);
+        cm.registerComponent(subTable);
+    }
+
+    private void SQLGenerateButtonActionPerformed(java.awt.event.ActionEvent evt) {
 
         SqlGenerate sqlGenerate = new SqlGenerate(tables);
         sqlCodeWindow.setTextArea(sqlGenerate.generateSqlTables()+sqlGenerate.generateSqlForeignKey());
@@ -463,31 +483,39 @@ public class MainMenu extends javax.swing.JFrame {
 
     }
 
-    private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {
-        loadTableToComboBox(jComboBox5,jComboBox6);
-     jDialog3.setVisible(true);
+    private void inheretenceButtonActionPerformed(java.awt.event.ActionEvent evt) {
+        loadTableToComboBox(inheritenceComboBox1, inheritenceComboBox2);
+     inheritenceDialog.setVisible(true);
 
     }
-    private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {
-        jDialog3.setVisible(false);
+    private void inheritenceCancelButtonActionPerformed(java.awt.event.ActionEvent evt) {
+        inheritenceDialog.setVisible(false);
 
     }
-    private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {
-        if(jComboBox5!=null&&jComboBox6!=null) {
-            Table table1 = searchTable(jComboBox5.getItemAt(jComboBox5.getSelectedIndex()));
-            Table table2 = searchTable(jComboBox6.getItemAt(jComboBox6.getSelectedIndex()));
+    private void inheritenceCreateButtonActionPerformed(java.awt.event.ActionEvent evt) {
+        if(inheritenceComboBox1 !=null&& inheritenceComboBox2 !=null) {
+            Table table1 = searchTable(inheritenceComboBox1.getItemAt(inheritenceComboBox1.getSelectedIndex()));
+            Table table2 = searchTable(inheritenceComboBox2.getItemAt(inheritenceComboBox2.getSelectedIndex()));
             JConnector connectLine;
             if(table1!=null && table2!=null && table1!=table2) {
                 if(table1.PKAvailable()) {
                     connectLine = new JConnector(table2, table1, LINE_INHERITANCE, Color.BLACK);
-                    table1.getjConnectors().add(connectLine);
-                    table2.getjConnectors().add(connectLine);
+                    saveRelaationConectors(table1,connectLine,true);
+                    saveRelaationConectors(table2,connectLine,true);
                     table1.getSubTables().add(table2);
                     table2.getSuperTables().add(table1);
-                    jPanel2.add(connectLine);
-                    jPanel2.revalidate();
-                    jPanel2.repaint();
-                    jDialog3.setVisible(false);
+                    if(!table2.PKAvailable()){
+                        creatColumnForSubTable(table2,table1);
+                    }
+                    else{
+                        table2.getColumnWithPK().FKChangeStateToTrue();
+                    }
+                    table1.disablePKInTable();
+                    table2.disablePKInTable();
+                    diagramPanel.add(connectLine);
+                    diagramPanel.revalidate();
+                    diagramPanel.repaint();
+                    inheritenceDialog.setVisible(false);
                 }else{
                     message.setText("Brak klucz głównego w tabeli bazowej");
                     message.setVisible(true);
@@ -501,31 +529,40 @@ public class MainMenu extends javax.swing.JFrame {
 
     }
 
-    private void jComboBox1ItemChange(ItemEvent e){
-        if(jLabel2.getText().equals("Jeden do wielu")) {
-            if (jComboBox1.getItemCount() != 0)
-                loadAtrributsToComboBox(jComboBox1.getItemAt(jComboBox1.getSelectedIndex()), 1,0);
+    private void creatColumnForSubTable(Table table,Table table1){
+        Column subTableColumn = new Column(table);
+        subTableColumn.setName(table1.getPKName());
+        subTableColumn.setPKState();
+        subTableColumn.FKChangeStateToTrue();
+        table.getColumns().add(subTableColumn);
+        table.getColumnPanel().add(subTableColumn);
+    }
+
+    private void tableRelationComboBox1ItemChange(ItemEvent e){
+        if(relationTypeLabel.getText().equals("Jeden do wielu")) {
+            if (tableRelationComboBox1.getItemCount() != 0)
+                loadAtrributsToComboBox(tableRelationComboBox1.getItemAt(tableRelationComboBox1.getSelectedIndex()), 1,0);
         }
-        else if(jLabel2.getText().equals("Jeden do jednego")){
-            if (jComboBox1.getItemCount() != 0)
-                loadAtrributsToComboBox(jComboBox1.getItemAt(jComboBox1.getSelectedIndex()), 1,1);
+        else if(relationTypeLabel.getText().equals("Jeden do jednego")){
+            if (tableRelationComboBox1.getItemCount() != 0)
+                loadAtrributsToComboBox(tableRelationComboBox1.getItemAt(tableRelationComboBox1.getSelectedIndex()), 1,1);
         } else {
-            if (jComboBox1.getItemCount() != 0)
-                loadAtrributsToComboBox(jComboBox1.getItemAt(jComboBox1.getSelectedIndex()), 1,2);
+            if (tableRelationComboBox1.getItemCount() != 0)
+                loadAtrributsToComboBox(tableRelationComboBox1.getItemAt(tableRelationComboBox1.getSelectedIndex()), 1,2);
         }
 
     }
-    private void jComboBox2ItemChange(ItemEvent e){
-        if(jLabel2.getText().equals("Jeden do wielu")) {
-            if (jComboBox2.getItemCount() != 0)
-                loadAtrributsToComboBox(jComboBox2.getItemAt(jComboBox2.getSelectedIndex()), 2,0);
+    private void tableRelationComboBox2ItemChange(ItemEvent e){
+        if(relationTypeLabel.getText().equals("Jeden do wielu")) {
+            if (tableRelationComboBox2.getItemCount() != 0)
+                loadAtrributsToComboBox(tableRelationComboBox2.getItemAt(tableRelationComboBox2.getSelectedIndex()), 2,0);
         }
-        else if(jLabel2.getText().equals("Jeden do jednego")){
-            if (jComboBox2.getItemCount() != 0)
-                loadAtrributsToComboBox(jComboBox2.getItemAt(jComboBox2.getSelectedIndex()), 2,1);
+        else if(relationTypeLabel.getText().equals("Jeden do jednego")){
+            if (tableRelationComboBox2.getItemCount() != 0)
+                loadAtrributsToComboBox(tableRelationComboBox2.getItemAt(tableRelationComboBox2.getSelectedIndex()), 2,1);
         } else {
-            if (jComboBox2.getItemCount() != 0)
-                loadAtrributsToComboBox(jComboBox2.getItemAt(jComboBox2.getSelectedIndex()), 2,2);
+            if (tableRelationComboBox2.getItemCount() != 0)
+                loadAtrributsToComboBox(tableRelationComboBox2.getItemAt(tableRelationComboBox2.getSelectedIndex()), 2,2);
         }
     }
 
@@ -560,78 +597,59 @@ public class MainMenu extends javax.swing.JFrame {
         Table tmp= searchTable(name);
         if(realtionType==0) {
             if (i == 1) {
-                jComboBox3.removeAllItems();
+                attributsComboBox1.removeAllItems();
                 for (Column column : tmp.getColumns()) {
-                    jComboBox3.addItem(column.getName());
+                    attributsComboBox1.addItem(column.getName());
                 }
             } else if (i == 2) {
-                jComboBox4.removeAllItems();
+                attributsComboBox2.removeAllItems();
                 for (Column column : tmp.getColumns()) {
-                    if (column.getPKState())
-                        jComboBox4.addItem(column.getName());
+                    if (column.getPKState()||column.getUniqueState())
+                        attributsComboBox2.addItem(column.getName());
                 }
             }
         }else if(realtionType==1){
             if (i == 1) {
-                jComboBox3.removeAllItems();
+                attributsComboBox1.removeAllItems();
                 for (Column column : tmp.getColumns()) {
                     if (column.getPKState())
-                        jComboBox3.addItem(column.getName());
+                        attributsComboBox1.addItem(column.getName());
                     else
-                        jComboBox3.addItem(column.getName());
+                        attributsComboBox1.addItem(column.getName());
                 }
             } else if (i == 2) {
-                jComboBox4.removeAllItems();
+                attributsComboBox2.removeAllItems();
                 for (Column column : tmp.getColumns()) {
                     if (column.getPKState())
-                        jComboBox4.addItem(column.getName());
+                        attributsComboBox2.addItem(column.getName());
                     else
-                        jComboBox4.addItem(column.getName());
+                        attributsComboBox2.addItem(column.getName());
                 }
             }
         } else if(realtionType==2){
             if (i == 1) {
-                jComboBox3.removeAllItems();
+                attributsComboBox1.removeAllItems();
                 for (Column column : tmp.getColumns()) {
                     if (column.getPKState())
-                        jComboBox3.addItem(column.getName());
+                        attributsComboBox1.addItem(column.getName());
                 }
             } else if (i == 2) {
-                jComboBox4.removeAllItems();
+                attributsComboBox2.removeAllItems();
                 for (Column column : tmp.getColumns()) {
                     if (column.getPKState())
-                        jComboBox4.addItem(column.getName());
+                        attributsComboBox2.addItem(column.getName());
                 }
             }
         }
 
     }
 
-    public javax.swing.JPanel getjPanel2(){
-        return jPanel2;
+    public javax.swing.JPanel getDiagramPanel(){
+        return diagramPanel;
     }
 
     public List<Table> getTables(){return tables;}
 
-
-    private void jPanel2MousePressed(java.awt.event.MouseEvent evt) {
-      /*  for (Table table : tables){ //System.out.println(table.getColumns());
-            for(Column column:table.getColumns()){
-
-                if(!column.getRelation().isEmpty()) {
-                    String saa = column.getRelation().toString();
-                    Table table4 = (Table)column.getRelation().get(0).get(0);
-                    Column col = (Column)column.getRelation().get(0).get(1);
-                    System.out.println(table4.getTableName()+"  "+col.getName());
-                   // System.out.println(saa.substring(saa.indexOf("Table[")+6,saa.indexOf(",")));
-                }
-            }
-        }*/
-       // SqlGenerate sqlGenerate = new SqlGenerate(tables);
-       // System.out.print(sqlGenerate.generateSqlTables()+sqlGenerate.generateSqlForeignKey());
-        //System.out.print(sqlGenerate.generateSqlForeignKey());
-
-    }
 
     public static void main(String[] args) {
 
@@ -666,39 +684,33 @@ public class MainMenu extends javax.swing.JFrame {
     private SqlCodeWindow sqlCodeWindow;
     private Message message;
     private ComponentMover cm;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
-    private javax.swing.JButton jButton9;
-    private javax.swing.JButton jButton10;
-    private javax.swing.JButton jButton11;
-    private javax.swing.JButton jButton12;
-    private javax.swing.JButton jButton13;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
-    private javax.swing.JComboBox<String> jComboBox3;
-    private javax.swing.JComboBox<String> jComboBox4;
-    private javax.swing.JComboBox<String> jComboBox5;
-    private javax.swing.JComboBox<String> jComboBox6;
-    private javax.swing.JDialog jDialog2;
-    private javax.swing.JDialog jDialog3;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    public javax.swing.JPanel jPanel2;
+    private javax.swing.JButton createTableButton;
+    private javax.swing.JButton clearButton;
+    private javax.swing.JButton oneToManyButton;
+    private javax.swing.JButton oneToOneButton;
+    private javax.swing.JButton ManyToManyButton;
+    private javax.swing.JButton relationCancelButton;
+    private javax.swing.JButton relationCreateButton;
+    private javax.swing.JButton SQLGenerateButton;
+    private javax.swing.JButton inheretenceButton;
+    private javax.swing.JButton inheritenceCancelButton;
+    private javax.swing.JButton inheritenceCreateButton;
+    private javax.swing.JComboBox<String> tableRelationComboBox1;
+    private javax.swing.JComboBox<String> tableRelationComboBox2;
+    private javax.swing.JComboBox<String> attributsComboBox1;
+    private javax.swing.JComboBox<String> attributsComboBox2;
+    private javax.swing.JComboBox<String> inheritenceComboBox1;
+    private javax.swing.JComboBox<String> inheritenceComboBox2;
+    private javax.swing.JDialog relationDialogWindow;
+    private javax.swing.JDialog inheritenceDialog;
+    private javax.swing.JLabel relationTypeLabel;
+    private javax.swing.JLabel tableLabel;
+    private javax.swing.JLabel attributLabel;
+    private javax.swing.JLabel table1Label;
+    private javax.swing.JLabel table2Label;
+    private javax.swing.JLabel inhertienceLabel;
+    private javax.swing.JLabel baseLabel;
+    private javax.swing.JLabel subtableLabel;
+    public javax.swing.JPanel diagramPanel;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextField jTextField1;
-
-
 }
